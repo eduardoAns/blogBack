@@ -15,6 +15,7 @@ import javax.persistence.Table;
 @ToString @EqualsAndHashCode
 public class Comentario {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter @Column(name = "id")
     private Integer id;
 

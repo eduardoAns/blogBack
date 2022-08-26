@@ -14,6 +14,7 @@ import java.util.Set;
 @ToString @EqualsAndHashCode
 public class Tag {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter @Column(name = "id")
     private Integer id;
 

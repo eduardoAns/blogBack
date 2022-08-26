@@ -44,7 +44,7 @@ public class Post {
 
 
     @Getter @Setter @Column(name = "estado")
-    private Integer estado;
+    private String estado;
 
     @ManyToMany @Setter @Getter
     @JoinTable(name="lista_tags", joinColumns =@JoinColumn(name ="id_post" ) , inverseJoinColumns = @JoinColumn(name ="id_tag" ))
