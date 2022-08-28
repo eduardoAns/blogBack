@@ -4,6 +4,7 @@ import com.example.blogapi.models.Tag;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -23,7 +24,30 @@ public class TagDaoImp implements TagDao{
     }
 
     @Override
+    public void postTag(Tag tag) {
+        entityManager.persist(tag);
+    }
+
+    @Override
+    public void updateTag(Tag tag) {
+        entityManager.merge(tag);
+    }
+
+    @Override
+    public void deleteTag(Integer id) {
+        Tag tag = entityManager.find(Tag.class ,id);
+        entityManager.remove(tag);
+    }
+
+    @Override
     public Tag getTagById(Integer id) {
         return entityManager.find(Tag.class, id);
+    }
+
+    @Override
+    public boolean existTagById(Integer id) {
+
+        Tag tag = entityManager.find(Tag.class, id);
+        return entityManager.contains(tag);
     }
 }

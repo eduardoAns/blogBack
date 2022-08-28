@@ -2,7 +2,7 @@ package com.example.blogapi.controllers;
 
 
 import com.example.blogapi.DAO.UsuarioDao;
-import com.example.blogapi.exceptions.RecordNotFoundException;
+import com.example.blogapi.exceptions.RequestException;
 import com.example.blogapi.models.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,11 +26,11 @@ public class UsuarioController {
     }
 
     @RequestMapping(value="api/usuario/{id}" , method = RequestMethod.GET)
-    public ResponseEntity<Usuario> getUsuarioById(@PathVariable Integer id) throws RecordNotFoundException {
+    public ResponseEntity<Usuario> getUsuarioById(@PathVariable Integer id)  {
 
         Usuario usuario = usuarioDao.getUsuario(id);
         if(usuario == null) {
-            throw new RecordNotFoundException("Invalid employee id : " + id);
+            throw new RequestException("p-401", HttpStatus.BAD_REQUEST, "El usuario es requerido");
         }
         return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
     }

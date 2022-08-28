@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "tags")
-@ToString @EqualsAndHashCode
+@ToString
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
