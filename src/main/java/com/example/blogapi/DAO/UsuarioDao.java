@@ -10,9 +10,11 @@ public interface UsuarioDao {
 
     Usuario getUsuario(Integer id);
 
-    void eliminar(Long id);
+    void deleteUsuario(Long id);
 
-    void registrar(Usuario usuario);
+    void postUsuario(Usuario usuario);
+
+
 
     Usuario obtenerUsuarioPorCredenciales(Usuario usuario);
 }

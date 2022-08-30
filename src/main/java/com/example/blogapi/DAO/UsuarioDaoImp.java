@@ -29,12 +29,12 @@ public class UsuarioDaoImp implements UsuarioDao{
     }
 
     @Override
-    public void eliminar(Long id) {
+    public void deleteUsuario(Long id) {
 
     }
 
     @Override
-    public void registrar(Usuario usuario) {
+    public void postUsuario(Usuario usuario) {
 
     }
 
