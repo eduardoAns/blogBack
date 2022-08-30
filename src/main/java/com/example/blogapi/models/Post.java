@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
 
@@ -19,19 +21,22 @@ public class Post {
     @Getter @Setter @Column(name = "id")
     private Integer id;
 
-    @Getter @Setter @Column(name = "titulo")
+    @NotNull @Getter @Setter @Column(name = "id_usuario")
+    private Integer idUsuario;
+
+    @NotEmpty @Getter @Setter @Column(name = "titulo")
     private String titulo;
 
-    @Getter @Setter @Column(name = "subtitulo")
+    @NotEmpty @Getter @Setter @Column(name = "subtitulo")
     private String subtitulo;
 
-    @Getter @Setter @Column(name = "contenido")
+    @NotEmpty @Getter @Setter @Column(name = "contenido")
     private String contenido;
 
-    @Getter @Setter @Column(name = "fecha_creacion")
+    @NotEmpty @Getter @Setter @Column(name = "fecha_creacion")
     private String fechaCreacion;
 
-    @Getter @Setter @Column(name = "fecha_actualizacion")
+    @NotEmpty @Getter @Setter @Column(name = "fecha_actualizacion")
     private String fechaActualizacion;
 
     @ManyToOne
@@ -43,7 +48,7 @@ public class Post {
     // private Usuario usuario;
 
 
-    @Getter @Setter @Column(name = "estado")
+    @NotEmpty @Getter @Setter @Column(name = "estado")
     private String estado;
 
     @ManyToMany @Setter @Getter
@@ -54,4 +59,6 @@ public class Post {
     @JoinColumn(name = "id_post", referencedColumnName = "id")
     @Setter @Getter
     private List<Comentario> comentarios;
+
+
 }

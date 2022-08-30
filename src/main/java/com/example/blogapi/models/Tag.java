@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Set;
 
@@ -18,7 +19,7 @@ public class Tag {
     @Getter @Setter @Column(name = "id")
     private Integer id;
 
-    @Getter @Setter @Column(name = "nombre")
+    @NotEmpty @Getter @Setter @Column(name = "nombre")
     private String nombre;
 
     @ManyToMany(mappedBy = "tags")

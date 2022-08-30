@@ -2,13 +2,17 @@ package com.example.blogapi.controllers;
 
 
 import com.example.blogapi.DAO.TagDao;
+import com.example.blogapi.exceptions.BadRequestException;
+import com.example.blogapi.exceptions.NotFoundException;
 import com.example.blogapi.exceptions.RequestException;
 import com.example.blogapi.models.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static java.util.Objects.isNull;
@@ -29,48 +33,53 @@ public class TagController {
         return ResponseEntity.status(HttpStatus.OK).body(tagDao.getTags());
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
     @RequestMapping(value="api/tag/{id}" , method = RequestMethod.GET)
-    public ResponseEntity<Tag> getTagById(@PathVariable Integer id){
+    public Tag getTagById(@PathVariable Integer id){
         if(!tagDao.existTagById(id)){
-            throw new RequestException("P-400", HttpStatus.BAD_REQUEST,"id:"+id+" invalido, el tag no existe");
+            throw new NotFoundException("id:"+id+" no encontrado, el tag no existe","p-400");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(tagDao.getTagById(id));
+        return tagDao.getTagById(id);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
     @RequestMapping(value="api/tag" , method = RequestMethod.POST)
-    public ResponseEntity postTag(@RequestBody Tag tag){
+    public void postTag(@Valid @RequestBody Tag tag, BindingResult result){
 
         if(tag.getId() != null){
             throw new RequestException("P-402", HttpStatus.BAD_REQUEST,"el id no es requerido");
         }
 
-        if(tag.getNombre().equals("")|| tag.getNombre() == null){
+        if(result.hasFieldErrors("nombre")){
             throw new RequestException("P-401", HttpStatus.BAD_REQUEST, "el nombre es requerido");
         }
 
         tagDao.postTag(tag);
-        return  new ResponseEntity(HttpStatus.CREATED);
     }
 
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseBody
     @RequestMapping(value="api/tag" , method = RequestMethod.PUT)
-    public ResponseEntity updateTag(@RequestBody Tag tag){
+    public void updateTag(@Valid @RequestBody Tag tag, BindingResult result){
         if(tag.getId().equals("")|| tag.getId() == null){
             throw new RequestException("P-402", HttpStatus.BAD_REQUEST,"el id es requerido");
         }
 
-        if(tag.getNombre().equals("")|| tag.getNombre() == null){
+        if(result.hasFieldErrors("nombre")){
             throw new RequestException("P-401", HttpStatus.BAD_REQUEST, "el nombre es requerido");
         }
         tagDao.updateTag(tag);
-        return  new ResponseEntity(HttpStatus.CREATED);
     }
 
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseBody
     @RequestMapping(value="api/tag/{id}" , method = RequestMethod.DELETE)
-    public ResponseEntity deleteTag(@PathVariable Integer id){
+    public void deleteTag(@PathVariable Integer id){
         if(!tagDao.existTagById(id)){
-            throw new RequestException("P-400", HttpStatus.BAD_REQUEST,"id:"+id+" invalido, el tag no existe");
+            throw new NotFoundException("id:"+id+" no encontrado, el tag no existe","p-404");
         }
         tagDao.deleteTag(id);
-        return  new ResponseEntity(HttpStatus.OK);
     }
 }

@@ -19,4 +19,6 @@ public interface ComentarioDao {
 
     boolean existComentarioById(Integer id);
 
+
+
 }

@@ -10,8 +10,10 @@ import com.example.blogapi.models.Comentario;
 import com.example.blogapi.models.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST} )
@@ -45,70 +47,73 @@ public class ComentarioController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     @RequestMapping(value="api/comentario" , method = RequestMethod.POST)
-    public void postComentario(@RequestBody Comentario comentario){
+    public void postComentario(@Valid @RequestBody Comentario comentario, BindingResult result){
+
         if(comentario.getId() != null){
             throw new BadRequestException("el id no es requerido","P-400");
         }
         //if idPost is null or vacio return bad request
-        if(comentario.getIdPost() == null){
+        if( result.hasFieldErrors("idPost")){
             throw new BadRequestException("el idPost es requerido","P-400");
         }
         //if contenido is null or vacio return bad request
-        if(comentario.getContenido().equals("")|| comentario.getContenido() == null){
+        if( result.hasFieldErrors("contenido")){
             throw new BadRequestException("el contenido es requerido","P-400");
         }
         //if titulo is null or vacio return bad request
-        if(comentario.getTitulo().equals("")|| comentario.getTitulo() == null){
+        if(result.hasFieldErrors( "titulo")){
             throw new BadRequestException("el titulo es requerido","P-400");
         }
         //if nombre is null or vacio return bad request
-        if(comentario.getNombre().equals("")|| comentario.getNombre() == null){
+        if(result.hasFieldErrors("nombre")){
             throw new BadRequestException("el nombre es requerido","P-400");
         }
         //if fechaCreacion is null or vacio return bad request
-        if(comentario.getFechaCreacion().equals("")|| comentario.getFechaCreacion() == null){
+        if(result.hasFieldErrors("fechaCreacion")){
             throw new BadRequestException("la fecha de creacion es requerida","P-400");
         }
         //if estado is null or vacio return bad request
-        if(comentario.getEstado().equals("")|| comentario.getEstado() == null){
+        if(result.hasFieldErrors("estado")){
             throw new BadRequestException("el estado es requerido","P-400");
         }
+
         comentarioDao.postComentario(comentario);
     }
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     @RequestMapping(value="api/comentario" , method = RequestMethod.PUT)
-    public void updateComentario(@RequestBody Comentario comentario){
-        if(comentario.getId() == null){
-            throw new BadRequestException("el id es requerido","P-400");
-        }
+    public void updateComentario(@Valid @RequestBody Comentario comentario, BindingResult result){
+
         //if no existe el comentario return not found
         if(!comentarioDao.existComentarioById(comentario.getId())){
             throw new NotFoundException("id:"+comentario.getId()+" no encontrado, el comentario no existe","p-404");
         }
+        if(result.hasFieldErrors("id")){
+            throw new BadRequestException("el id es requerido","P-400");
+        }
         //if idPost is null or vacio return bad request
-        if(comentario.getIdPost() == null){
+        if( result.hasFieldErrors("idPost")){
             throw new BadRequestException("el idPost es requerido","P-400");
         }
         //if contenido is null or vacio return bad request
-        if(comentario.getContenido().equals("")|| comentario.getContenido() == null){
+        if( result.hasFieldErrors("contenido")){
             throw new BadRequestException("el contenido es requerido","P-400");
         }
         //if titulo is null or vacio return bad request
-        if(comentario.getTitulo().equals("")|| comentario.getTitulo() == null){
+        if(result.hasFieldErrors("titulo")){
             throw new BadRequestException("el titulo es requerido","P-400");
         }
         //if nombre is null or vacio return bad request
-        if(comentario.getNombre().equals("")|| comentario.getNombre() == null){
+        if(result.hasFieldErrors("nombre")){
             throw new BadRequestException("el nombre es requerido","P-400");
         }
         //if fechaCreacion is null or vacio return bad request
-        if(comentario.getFechaCreacion().equals("")|| comentario.getFechaCreacion() == null){
+        if(result.hasFieldErrors("fechaCreacion")){
             throw new BadRequestException("la fecha de creacion es requerida","P-400");
         }
         //if estado is null or vacio return bad request
-        if(comentario.getEstado().equals("")|| comentario.getEstado() == null){
+        if(result.hasFieldErrors("estado")){
             throw new BadRequestException("el estado es requerido","P-400");
         }
 

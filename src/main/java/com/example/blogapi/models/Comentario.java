@@ -1,14 +1,15 @@
 package com.example.blogapi.models;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 
 @Entity
 @Table(name = "comentarios")
@@ -20,28 +21,33 @@ public class Comentario {
     private Integer id;
 
     @Getter @Setter @Column(name = "id_post")
+    @NotNull
     private Integer idPost;
 
     @Getter @Setter @Column(name = "titulo")
+    @NotEmpty @NotBlank @NotNull
     private String titulo;
 
-    @Getter @Setter @Column(name = "contenido")
+    @NotEmpty @Getter @Setter @Column(name = "contenido")
     private String contenido;
 
-    @Getter @Setter @Column(name = "nombre")
+    @NotEmpty @Getter @Setter @Column(name = "nombre")
     private String nombre;
 
     // @ManyToOne
     // @Getter @Setter @JoinColumn(name = "id_post")
     // private Post post;
 
-    @Getter @Setter @Column(name = "fecha_creacion")
+    @NotEmpty @Getter @Setter @Column(name = "fecha_creacion")
     private String fechaCreacion;
 
     @Getter @Setter @Column(name = "fecha_actualizacion")
     private String fechaActualizacion;
 
-    @Getter @Setter @Column(name = "estado")
+    @NotEmpty @Getter @Setter @Column(name = "estado")
     private String estado;
+
+    public Comentario() {
+    }
 
 }
