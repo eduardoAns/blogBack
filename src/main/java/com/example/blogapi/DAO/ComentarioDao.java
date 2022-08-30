@@ -11,4 +11,12 @@ public interface ComentarioDao {
 
     Comentario getComentarioById(Integer id);
 
+    void postComentario(Comentario comentario);
+
+    void updateComentario(Comentario comentario);
+
+    void deleteComentario(Integer id);
+
+    boolean existComentarioById(Integer id);
+
 }

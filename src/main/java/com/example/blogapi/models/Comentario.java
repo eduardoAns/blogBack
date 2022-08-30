@@ -19,6 +19,9 @@ public class Comentario {
     @Getter @Setter @Column(name = "id")
     private Integer id;
 
+    @Getter @Setter @Column(name = "id_post")
+    private Integer idPost;
+
     @Getter @Setter @Column(name = "titulo")
     private String titulo;
 

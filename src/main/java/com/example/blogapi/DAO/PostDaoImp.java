@@ -26,4 +26,28 @@ public class PostDaoImp implements PostDao {
     public Post getPostById(Integer id) {
         return entityManager.find(Post.class, id);
     }
+
+    @Override
+    public void postPost(Post post) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void updatePost(Post post) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void deletePost(Integer id) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public boolean existPostById(Integer id) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }

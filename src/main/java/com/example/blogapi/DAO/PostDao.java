@@ -9,4 +9,13 @@ public interface PostDao {
     List<Post> getPosts();
 
     Post getPostById(Integer id);
+
+    void postPost(Post post);
+    
+    void updatePost(Post post);
+
+    void deletePost(Integer id);
+
+    boolean existPostById(Integer id);
+    
 }

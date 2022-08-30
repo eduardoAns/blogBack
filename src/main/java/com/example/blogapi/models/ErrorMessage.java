@@ -1,20 +1,25 @@
 package com.example.blogapi.models;
 
-import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
+import lombok.ToString;
 
-@Data
-public class ErrorDTO {
-    private String code;
+@ToString
+public class ErrorMessage {
+    @Getter
     private String exception;
+    @Getter
     private String message;
+    @Getter
     private String path;
+    @Getter
+    private String code;
 
-    public ErrorDTO(Exception exception, String path, String code) {
-        this.code = code;
+    public ErrorMessage(Exception exception, String path, String code) {
         this.exception = exception.getClass().getSimpleName();
         this.message = exception.getMessage();
         this.path = path;
+        this.code = code;
     }
+
+
 }

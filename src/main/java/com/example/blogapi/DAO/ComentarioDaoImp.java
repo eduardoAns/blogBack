@@ -26,4 +26,27 @@ public class ComentarioDaoImp implements ComentarioDao{
     public Comentario getComentarioById(Integer id) {
         return entityManager.find(Comentario.class, id);
     }
+
+    @Override
+    public void postComentario(Comentario comentario) {
+        entityManager.persist(comentario);
+        
+    }
+
+    @Override
+    public void updateComentario(Comentario comentario) {
+        entityManager.merge(comentario);
+    }
+
+    @Override
+    public void deleteComentario(Integer id) {
+        Comentario comentario = entityManager.find(Comentario.class ,id);
+        entityManager.remove(comentario);
+    }
+
+    @Override
+    public boolean existComentarioById(Integer id) {
+        Comentario comentario = entityManager.find(Comentario.class, id);
+        return entityManager.contains(comentario);
+    }
 }

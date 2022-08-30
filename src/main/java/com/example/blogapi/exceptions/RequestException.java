@@ -9,7 +9,7 @@ public class RequestException extends RuntimeException {
 
     public RequestException(String code, HttpStatus status, String message) {
         super(message);
-        this.code = code;
-        this.status = status;
+         this.status = status;
+         this.code = code;
     }
 }
