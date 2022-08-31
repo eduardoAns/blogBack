@@ -50,4 +50,24 @@ public class TagDaoImp implements TagDao{
         Tag tag = entityManager.find(Tag.class, id);
         return entityManager.contains(tag);
     }
+
+    @Override
+    public void postTagInPost(Integer idTag, Integer idPost ) {
+
+        // post id_tag and id_post in lista_tags
+        String query ="INSERT INTO lista_tags (id_tag, id_post) VALUES ("+idTag+", "+idPost+")";
+        entityManager.createNativeQuery(query).executeUpdate();
+
+    }
+
+    @Override
+    public Tag getTagByName(String name) {
+        return entityManager.find(Tag.class, name);
+    }
+
+    @Override
+    public boolean existTagByName(String name) {
+        Tag tag = entityManager.find(Tag.class, name);
+        return entityManager.contains(tag);
+    }
 }

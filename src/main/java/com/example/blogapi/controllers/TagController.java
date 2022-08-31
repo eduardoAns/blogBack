@@ -1,6 +1,7 @@
 package com.example.blogapi.controllers;
 
 
+import com.example.blogapi.DAO.PostDao;
 import com.example.blogapi.DAO.TagDao;
 import com.example.blogapi.exceptions.BadRequestException;
 import com.example.blogapi.exceptions.NotFoundException;
@@ -24,6 +25,9 @@ public class TagController {
 
     @Autowired
     private TagDao tagDao;
+
+    @Autowired
+    private PostDao postDao;
 
     @RequestMapping(value="api/tags", method = RequestMethod.GET)
     public ResponseEntity<List<Tag>> getTags(){
@@ -82,4 +86,19 @@ public class TagController {
         }
         tagDao.deleteTag(id);
     }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    @RequestMapping(value="api/tag/addToPost" , method = RequestMethod.POST)
+    public void addTagToPost(@RequestParam Integer postId, @RequestParam Integer tagId){
+        if(!postDao.existPostById(postId)){
+            throw new NotFoundException("id:"+postId+" no encontrado, el post no existe","p-404");
+        }
+        if(!tagDao.existTagById(tagId)){
+            throw new NotFoundException("id:"+tagId+" no encontrado, el tag no existe","p-404");
+        }
+
+        tagDao.postTagInPost(tagId, postId );
+    }
+
 }
