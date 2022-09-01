@@ -29,7 +29,7 @@ public class TagController {
     @Autowired
     private PostDao postDao;
 
-    @RequestMapping(value="api/tags", method = RequestMethod.GET)
+    @RequestMapping(value="api/tag", method = RequestMethod.GET)
     public ResponseEntity<List<Tag>> getTags(){
         if(tagDao.getTags().isEmpty()){
             throw new RequestException("P-500", HttpStatus.INTERNAL_SERVER_ERROR,"Error al traer los datos, json vacio");

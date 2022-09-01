@@ -10,7 +10,6 @@ import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +27,7 @@ public class UsuarioController {
 
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    @RequestMapping(value="api/usuarios", method = RequestMethod.GET)
+    @RequestMapping(value="api/usuario", method = RequestMethod.GET)
     public List<Usuario> getUsuarios(){
         //if list is empty return Not Found
         if(usuarioDao.getUsuarios().isEmpty()){
@@ -50,6 +49,7 @@ public class UsuarioController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
     @RequestMapping(value="api/usuario", method = RequestMethod.POST)
     public void postUsuario(@Valid @RequestBody Usuario usuario, BindingResult result){
 
@@ -62,10 +62,6 @@ public class UsuarioController {
         }
 
         if( result.hasFieldErrors("apellidoPaterno")){
-            throw new BadRequestException("el apellido es requerido","P-400");
-        }
-
-        if( result.hasFieldErrors("apellidoMaterno")){
             throw new BadRequestException("el apellido es requerido","P-400");
         }
 
@@ -94,6 +90,7 @@ public class UsuarioController {
         usuario.setPassword(hash);
         usuarioDao.postUsuario(usuario);
     }
+
 
 
 }

@@ -29,7 +29,7 @@ public class ComentarioController {
 
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    @RequestMapping(value="api/comentarios", method = RequestMethod.GET)
+    @RequestMapping(value="api/comentario", method = RequestMethod.GET)
     public List<Comentario> getComentarios(){
         if(comentarioDao.getComentarios().isEmpty()){
             throw new RequestException("P-500", HttpStatus.INTERNAL_SERVER_ERROR,"Error al traer los datos, json vacio");

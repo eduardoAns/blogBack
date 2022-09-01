@@ -23,7 +23,7 @@ public class PostController {
 
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    @RequestMapping(value="api/posts", method = RequestMethod.GET)
+    @RequestMapping(value="api/post", method = RequestMethod.GET)
     public List<Post> getPosts(){
         if(postDao.getPosts().isEmpty()){
             throw new RequestException("P-500", HttpStatus.INTERNAL_SERVER_ERROR,"Error al traer los datos, json vacio");
