@@ -3,6 +3,7 @@ package com.example.blogapi.controllers;
 
 import com.example.blogapi.DAO.ComentarioDao;
 
+import com.example.blogapi.DAO.PostDao;
 import com.example.blogapi.exceptions.BadRequestException;
 import com.example.blogapi.exceptions.NotFoundException;
 import com.example.blogapi.exceptions.RequestException;
@@ -16,12 +17,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST} )
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class ComentarioController {
 
     @Autowired
     private ComentarioDao comentarioDao;
+
+    @Autowired
+    private PostDao postDao;
 
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -56,6 +60,10 @@ public class ComentarioController {
         if( result.hasFieldErrors("idPost")){
             throw new BadRequestException("el idPost es requerido","P-400");
         }
+
+        if(!postDao.existPostById(comentario.getIdPost())){
+            throw new NotFoundException("id:"+comentario.getIdPost()+" no encontrado, el post no existe","p-404");
+        }
         //if contenido is null or vacio return bad request
         if( result.hasFieldErrors("contenido")){
             throw new BadRequestException("el contenido es requerido","P-400");
@@ -89,6 +97,9 @@ public class ComentarioController {
         if(!comentarioDao.existComentarioById(comentario.getId())){
             throw new NotFoundException("id:"+comentario.getId()+" no encontrado, el comentario no existe","p-404");
         }
+        //if post not exist return Not found exception
+
+
         if(result.hasFieldErrors("id")){
             throw new BadRequestException("el id es requerido","P-400");
         }
@@ -96,6 +107,11 @@ public class ComentarioController {
         if( result.hasFieldErrors("idPost")){
             throw new BadRequestException("el idPost es requerido","P-400");
         }
+
+        if(!postDao.existPostById(comentario.getIdPost())){
+            throw new NotFoundException("id:"+comentario.getIdPost()+" no encontrado, el post no existe","p-404");
+        }
+
         //if contenido is null or vacio return bad request
         if( result.hasFieldErrors("contenido")){
             throw new BadRequestException("el contenido es requerido","P-400");

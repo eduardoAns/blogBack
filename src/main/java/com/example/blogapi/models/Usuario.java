@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity
@@ -21,28 +22,28 @@ public class Usuario {
     @Getter @Setter @Column(name = "id")
     private Integer id;
 
-    @Getter @Setter @Column(name = "nombre")
+    @NotEmpty @Getter @Setter @Column(name = "nombre")
     private String nombre;
 
     @Getter @Setter @Column(name = "apeliido_materno")
     private String apellidoMaterno;
 
-    @Getter @Setter @Column(name = "apellido_paterno")
+    @NotEmpty @Getter @Setter @Column(name = "apellido_paterno")
     private String apellidoPaterno;
 
     @Getter @Setter @Column(name = "email")
-    private String email;
+    @NotEmpty private String email;
 
     @Getter @Setter @Column(name = "sexo")
     private String sexo;
 
-    @Getter @Setter @Column(name = "password")
+    @NotEmpty @Getter @Setter @Column(name = "password")
     private String password;
 
-    @Getter @Setter @Column(name = "rol")
+    @NotEmpty @Getter @Setter @Column(name = "rol")
     private String rol;
 
-    @Getter @Setter @Column(name = "estado")
+    @NotEmpty @Getter @Setter @Column(name = "estado")
     private String estado;
 
     @Getter @Setter

@@ -3,7 +3,6 @@ package com.example.blogapi.controllers;
 import com.example.blogapi.exceptions.BadRequestException;
 import com.example.blogapi.exceptions.NotFoundException;
 import com.example.blogapi.exceptions.RequestException;
-import com.example.blogapi.models.ErrorDTO;
 import com.example.blogapi.models.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

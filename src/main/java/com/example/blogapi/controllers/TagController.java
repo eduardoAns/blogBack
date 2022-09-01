@@ -19,7 +19,7 @@ import java.util.List;
 import static java.util.Objects.isNull;
 import static org.apache.logging.log4j.ThreadContext.isEmpty;
 
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST} )
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class TagController {
 

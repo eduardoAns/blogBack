@@ -14,7 +14,9 @@ public interface UsuarioDao {
 
     void postUsuario(Usuario usuario);
 
-
+    void updateUsuario(Usuario usuario);
 
     Usuario obtenerUsuarioPorCredenciales(Usuario usuario);
+
+    boolean existUsuarioById(Integer id);
 }
