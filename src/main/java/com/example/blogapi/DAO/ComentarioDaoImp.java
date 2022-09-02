@@ -49,4 +49,11 @@ public class ComentarioDaoImp implements ComentarioDao{
         Comentario comentario = entityManager.find(Comentario.class, id);
         return entityManager.contains(comentario);
     }
+
+    @Override
+    public List<Comentario> getComentariosByPostId(Integer id) {
+        //return array comentarios by id_post
+        String query ="FROM Comentario WHERE id_post = "+id;
+        return entityManager.createQuery(query).getResultList();
+    }
 }

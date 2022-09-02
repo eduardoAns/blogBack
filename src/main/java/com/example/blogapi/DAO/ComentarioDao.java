@@ -19,6 +19,6 @@ public interface ComentarioDao {
 
     boolean existComentarioById(Integer id);
 
-
+    List<Comentario> getComentariosByPostId(Integer id);
 
 }

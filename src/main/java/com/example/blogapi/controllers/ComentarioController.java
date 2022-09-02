@@ -145,6 +145,16 @@ public class ComentarioController {
         }
         comentarioDao.deleteComentario(id);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    @RequestMapping(value="api/comentario/byPostId/{id}" , method = RequestMethod.GET)
+    public List<Comentario> getComentariosByPostId(@PathVariable Integer id){
+        if(!postDao.existPostById(id)){
+            throw new NotFoundException("id:"+id+" no encontrado, el post no existe","p-404");
+        }
+        return comentarioDao.getComentariosByPostId(id);
+    }
 }
 
 
