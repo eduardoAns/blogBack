@@ -33,6 +33,7 @@ public class AuthController {
             throw new NotFoundException("Usuario o contraseña incorrectos","P-404");
         }
         Usuario usuarioLogueado = usuarioDao.obtenerUsuarioPorCredenciales(usuario);
+        System.out.println("-----login------");
         return createToken(usuarioLogueado, usuarioLogueado.getId());
     }
 
@@ -42,8 +43,7 @@ public class AuthController {
         System.out.println(tokenUsuario);
         String usuarioId = jwtUtil.getKey(tokenUsuario);
         Usuario usuarioLogueado = usuarioDao.getUsuario(Integer.parseInt(usuarioId));
-        System.out.println(usuarioLogueado);
-
+        System.out.println("-----validate-token------");
         return createToken(usuarioLogueado, Integer.parseInt(usuarioId));
 
     }
@@ -59,7 +59,7 @@ public class AuthController {
         if (usuarioLogueado != null){
 
             map.put("id", String.valueOf(usuarioLogueado.getId()));
-            map.put("rol", String.valueOf(usuarioLogueado.getIdRol()));
+            map.put("idRol", String.valueOf(usuarioLogueado.getIdRol()));
 
             System.out.println(map);
             return map;
@@ -79,12 +79,11 @@ public class AuthController {
 
         Map<String, String> user = new HashMap<String, String>();
 
-        user.put("correo",usuarioCorreo);
-        user.put("rol", String.valueOf(usuarioRol));
-        user.put("nombre",usuarioNombre);
-
         if (usuarioLogueado != null){
 
+            user.put("correo",usuarioCorreo);
+            user.put("idRol", String.valueOf(usuarioRol));
+            user.put("nombre",usuarioNombre);
             String token = jwtUtil.create(String.valueOf(id), usuarioCorreo);
             user.put("token",token);
 
