@@ -1,31 +1,30 @@
 package com.example.blogapi.models;
 
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Table(name = "categorias")
+@Table(name = "roles")
 @ToString
 @EqualsAndHashCode
-public class Categoria {
+public class Rol {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter @Column(name = "id")
     private Integer id;
 
     @Getter @Setter @Column(name = "nombre")
-    private String nombre;
+    @NotEmpty
+    private String url;
 
-    @Getter @Setter @Column(name = "fecha_creacion")
-    private String fechaCreacion;
-
-    @OneToMany(mappedBy = "categoria")
-    private List<Post> posts;
-
+    //@OneToMany(mappedBy = "rol")
+    //private List<Usuario> usuarios;
 }

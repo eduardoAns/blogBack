@@ -17,5 +17,9 @@ public interface PostDao {
     void deletePost(Integer id);
 
     boolean existPostById(Integer id);
+
+    List<Post> getPostsByCategory(String category);
+
+    List<String> getIdPosts();
     
 }

@@ -69,9 +69,7 @@ public class ComentarioController {
             throw new BadRequestException("el contenido es requerido","P-400");
         }
         //if titulo is null or vacio return bad request
-        if(result.hasFieldErrors( "titulo")){
-            throw new BadRequestException("el titulo es requerido","P-400");
-        }
+
         //if nombre is null or vacio return bad request
         if(result.hasFieldErrors("nombre")){
             throw new BadRequestException("el nombre es requerido","P-400");
@@ -116,14 +114,8 @@ public class ComentarioController {
         if( result.hasFieldErrors("contenido")){
             throw new BadRequestException("el contenido es requerido","P-400");
         }
-        //if titulo is null or vacio return bad request
-        if(result.hasFieldErrors("titulo")){
-            throw new BadRequestException("el titulo es requerido","P-400");
-        }
-        //if nombre is null or vacio return bad request
-        if(result.hasFieldErrors("nombre")){
-            throw new BadRequestException("el nombre es requerido","P-400");
-        }
+
+
         //if fechaCreacion is null or vacio return bad request
         if(result.hasFieldErrors("fechaCreacion")){
             throw new BadRequestException("la fecha de creacion es requerida","P-400");

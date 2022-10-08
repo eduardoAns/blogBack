@@ -6,7 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @Transactional
@@ -52,5 +54,23 @@ public class PostDaoImp implements PostDao {
         Post post = entityManager.find(Post.class, id);
         return entityManager.contains(post);
 
+    }
+
+    @Override
+    public List<Post> getPostsByCategory(String category) {
+        List<Post> listaType = getPosts();
+        List<Post> response = listaType.stream().filter(p -> p.getCategoria().getNombre().contains(category)).collect(Collectors.toList());
+        return response;
+    }
+
+    @Override
+    public List<String> getIdPosts() {
+        String query = "SELECT id FROM Post";
+        List<Integer> lista = entityManager.createQuery(query).getResultList();
+        List<String> result = new ArrayList<String>();
+        for(int i=0;i<lista.size();i++){
+            result.add(lista.get(i).toString());
+        }
+        return result;
     }
 }

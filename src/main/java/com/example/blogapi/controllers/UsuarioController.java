@@ -77,12 +77,16 @@ public class UsuarioController {
             throw new BadRequestException("el sexo es requerido","P-400");
         }
 
-        if( result.hasFieldErrors("rol")){
-            throw new BadRequestException("el rol es requerido","P-400");
+        if( result.hasFieldErrors("idRol")){
+            throw new BadRequestException("el id_rol es requerido","P-400");
         }
 
         if( result.hasFieldErrors("estado")){
             throw new BadRequestException("el estado es requerido","P-400");
+        }
+
+        if( result.hasFieldErrors("fechaCreacion")){
+            throw new BadRequestException("la fecha de creacion es requerida","P-400");
         }
 
         Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);

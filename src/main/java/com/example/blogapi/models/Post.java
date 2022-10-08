@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "posts")
+@Table(name = "Posts")
 @ToString @EqualsAndHashCode
 public class Post {
 
@@ -43,13 +43,12 @@ public class Post {
     @Getter @Setter @JoinColumn(name = "id_categoria")
     private Categoria categoria;
 
-    // @ManyToOne
-    // @Getter @Setter @JoinColumn(name = "id_usuario")
-    // private Usuario usuario;
-
-
     @NotEmpty @Getter @Setter @Column(name = "estado")
     private String estado;
+
+    // @ManyToOne
+    // @JoinColumn(name = "id_usuario")
+    // private Usuario usuario;
 
     @ManyToMany @Setter @Getter
     @JoinTable(name="lista_tags", joinColumns =@JoinColumn(name ="id_post" ) , inverseJoinColumns = @JoinColumn(name ="id_tag" ))
@@ -59,6 +58,11 @@ public class Post {
     @JoinColumn(name = "id_post", referencedColumnName = "id")
     @Setter @Getter
     private List<Comentario> comentarios;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_post", referencedColumnName = "id")
+    @Setter @Getter
+    private List<Image> images;
 
 
 }

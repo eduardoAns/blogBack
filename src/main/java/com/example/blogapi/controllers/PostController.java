@@ -152,5 +152,15 @@ public class PostController {
         postDao.deletePost(id);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    @RequestMapping(value="api/post/categoria/{category}" , method = RequestMethod.GET)
+    public List<Post> getPostsByCategory(@PathVariable String category){ return  postDao.getPostsByCategory(category); }
+
+
+    @RequestMapping(value = "api/post/listaId", method = RequestMethod.GET)
+    public List<String> getListaId(){
+        return postDao.getIdPosts();
+    }
 
 }

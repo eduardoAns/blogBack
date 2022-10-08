@@ -24,14 +24,18 @@ public class Comentario {
     @NotNull
     private Integer idPost;
 
-    @Getter @Setter @Column(name = "titulo")
-    @NotEmpty @NotBlank @NotNull
-    private String titulo;
+    @Getter @Setter @Column(name = "id_usuario")
+    @NotNull
+    private Integer idUser;
+
+    // @ManyToOne
+    // @Getter @Setter @JoinColumn(name = "id_usuario")
+    // private Usuario usuario;
 
     @NotEmpty @Getter @Setter @Column(name = "contenido")
     private String contenido;
 
-    @NotEmpty @Getter @Setter @Column(name = "nombre")
+    @Getter @Setter @Column(name = "nombre")
     private String nombre;
 
     // @ManyToOne

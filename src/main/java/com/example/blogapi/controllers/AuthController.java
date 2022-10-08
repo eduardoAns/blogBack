@@ -3,6 +3,7 @@ package com.example.blogapi.controllers;
 
 import com.example.blogapi.DAO.UsuarioDao;
 import com.example.blogapi.exceptions.NotFoundException;
+import com.example.blogapi.models.Rol;
 import com.example.blogapi.models.Usuario;
 import com.example.blogapi.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,7 @@ public class AuthController {
         if (usuarioLogueado != null){
 
             map.put("id", String.valueOf(usuarioLogueado.getId()));
-            map.put("rol",usuarioLogueado.getRol());
+            map.put("rol", String.valueOf(usuarioLogueado.getIdRol()));
 
             System.out.println(map);
             return map;
@@ -74,12 +75,12 @@ public class AuthController {
 
         String usuarioCorreo = usuarioLogueado.getEmail();
         String usuarioNombre = usuarioLogueado.getNombre();
-        String usuarioRol = usuarioLogueado.getRol();
+        Integer usuarioRol = usuarioLogueado.getIdRol();
 
         Map<String, String> user = new HashMap<String, String>();
 
         user.put("correo",usuarioCorreo);
-        user.put("rol",usuarioRol);
+        user.put("rol", String.valueOf(usuarioRol));
         user.put("nombre",usuarioNombre);
 
         if (usuarioLogueado != null){
