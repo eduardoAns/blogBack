@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Posts")
-@ToString @EqualsAndHashCode
+@EqualsAndHashCode
 public class Post {
 
     @Id

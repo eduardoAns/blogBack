@@ -1,6 +1,7 @@
 package com.example.blogapi.DAO;
 
 import com.example.blogapi.models.Post;
+import com.example.blogapi.models.Usuario;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,6 +62,32 @@ public class PostDaoImp implements PostDao {
         List<Post> listaType = getPosts();
         List<Post> response = listaType.stream().filter(p -> p.getCategoria().getNombre().contains(category)).collect(Collectors.toList());
         return response;
+    }
+
+    @Override
+    public List<Post> getPostsByTag(String tag) {
+
+        String queryTag = "SELECT id FROM Tag WHERE nombre = :tag";
+        Integer idTag = (Integer) entityManager.createQuery(queryTag)
+                .setParameter("tag", tag)
+                .getSingleResult();
+
+        String query = "SELECT idPost FROM Lista_tags WHERE idTag = :idTag";
+        List<Integer> listaIdPosts = entityManager.createQuery(query)
+                .setParameter("idTag", idTag)
+                .getResultList();
+        System.out.println(listaIdPosts);
+
+        List<Post> listaPosts = new ArrayList<>();
+
+        for (Integer idPost : listaIdPosts) {
+            Post post = getPostById(idPost);
+            listaPosts.add(post);
+        }
+
+        System.out.println(listaPosts);
+
+        return listaPosts;
     }
 
     @Override

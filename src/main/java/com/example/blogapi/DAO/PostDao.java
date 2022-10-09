@@ -20,6 +20,8 @@ public interface PostDao {
 
     List<Post> getPostsByCategory(String category);
 
+    List<Post> getPostsByTag(String tag);
+
     List<String> getIdPosts();
     
 }

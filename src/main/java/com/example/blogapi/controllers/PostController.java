@@ -157,6 +157,12 @@ public class PostController {
     @RequestMapping(value="api/post/categoria/{category}" , method = RequestMethod.GET)
     public List<Post> getPostsByCategory(@PathVariable String category){ return  postDao.getPostsByCategory(category); }
 
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    @RequestMapping(value="api/post/tag/{tag}" , method = RequestMethod.GET)
+    public List<Post> getPostsByTag(@PathVariable String tag){
+        return  postDao.getPostsByTag(tag);
+    }
 
     @RequestMapping(value = "api/post/listaId", method = RequestMethod.GET)
     public List<String> getListaId(){
