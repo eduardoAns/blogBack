@@ -54,7 +54,6 @@ public class PostDaoImp implements PostDao {
 
         Post post = entityManager.find(Post.class, id);
         return entityManager.contains(post);
-
     }
 
     @Override
