@@ -164,6 +164,11 @@ public class PostController {
         return  postDao.getPostsByTag(tag);
     }
 
+    @RequestMapping(value="api/post/search/{title}" , method = RequestMethod.GET)
+    public List<Post> getPostByTitle(@PathVariable String title){ return  postDao.getPostsByTitle(title); }
+
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
     @RequestMapping(value = "api/post/listaId", method = RequestMethod.GET)
     public List<String> getListaId(){
         return postDao.getIdPosts();

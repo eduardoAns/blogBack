@@ -65,6 +65,13 @@ public class PostDaoImp implements PostDao {
     }
 
     @Override
+    public List<Post> getPostsByTitle(String title) {
+        List<Post> listaTitle = getPosts();
+        List<Post> response = listaTitle.stream().filter(p -> p.getTitulo().contains(title)).collect(Collectors.toList());
+        return response;
+    }
+
+    @Override
     public List<Post> getPostsByTag(String tag) {
 
         String queryTag = "SELECT id FROM Tag WHERE nombre = :tag";

@@ -22,6 +22,8 @@ public interface PostDao {
 
     List<Post> getPostsByTag(String tag);
 
+    List<Post> getPostsByTitle(String title);
+
     List<String> getIdPosts();
     
 }
