@@ -147,6 +147,13 @@ public class ComentarioController {
         }
         return comentarioDao.getComentariosByPostId(id);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    @RequestMapping(value="api/comentario/ByUserId/{id}" , method = RequestMethod.GET)
+    public List<Comentario> getOrdenByUser(@PathVariable Integer id){
+        return comentarioDao.getComentariosByUserId(id);
+    }
 }
 
 

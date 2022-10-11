@@ -5,6 +5,7 @@ import com.example.blogapi.DAO.PostDao;
 import com.example.blogapi.exceptions.BadRequestException;
 import com.example.blogapi.exceptions.NotFoundException;
 import com.example.blogapi.exceptions.RequestException;
+import com.example.blogapi.models.Comentario;
 import com.example.blogapi.models.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -172,6 +173,13 @@ public class PostController {
     @RequestMapping(value = "api/post/listaId", method = RequestMethod.GET)
     public List<String> getListaId(){
         return postDao.getIdPosts();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    @RequestMapping(value="api/post/ByUserId/{id}" , method = RequestMethod.GET)
+    public List<Post> getOrdenByUser(@PathVariable Integer id){
+        return postDao.getPostsByUserId(id);
     }
 
 }

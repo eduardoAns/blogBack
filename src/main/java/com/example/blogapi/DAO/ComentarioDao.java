@@ -21,4 +21,5 @@ public interface ComentarioDao {
 
     List<Comentario> getComentariosByPostId(Integer id);
 
+    List<Comentario> getComentariosByUserId(Integer id);
 }

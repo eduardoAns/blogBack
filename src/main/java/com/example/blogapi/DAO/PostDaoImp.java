@@ -106,4 +106,13 @@ public class PostDaoImp implements PostDao {
         }
         return result;
     }
+
+    @Override
+    public List<Post> getPostsByUserId(Integer id) {
+        String query = "FROM Post WHERE idUsuario = :id";
+        List<Post> lista = entityManager.createQuery(query)
+                .setParameter("id", id)
+                .getResultList();
+        return lista;
+    }
 }

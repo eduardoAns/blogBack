@@ -25,5 +25,7 @@ public interface PostDao {
     List<Post> getPostsByTitle(String title);
 
     List<String> getIdPosts();
+
+    List<Post> getPostsByUserId(Integer id);
     
 }

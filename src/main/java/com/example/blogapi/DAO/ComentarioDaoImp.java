@@ -56,4 +56,12 @@ public class ComentarioDaoImp implements ComentarioDao{
         String query ="FROM Comentario WHERE id_post = "+id;
         return entityManager.createQuery(query).getResultList();
     }
+
+    @Override
+    public List<Comentario> getComentariosByUserId(Integer id) {
+        String query = "FROM Comentario WHERE id_usuario = :id";
+        List<Comentario> lista = entityManager.createQuery(query).setParameter("id", id).getResultList();
+        return lista;
+    }
+
 }
