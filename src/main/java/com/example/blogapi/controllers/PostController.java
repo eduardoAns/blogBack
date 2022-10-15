@@ -140,6 +140,10 @@ public class PostController {
         if( result.hasFieldErrors("idCategoria")){
             throw new BadRequestException("el id de categoria es requerido","P-400");
         }
+
+
+
+
         postDao.updatePost(post);
     }
 

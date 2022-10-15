@@ -7,19 +7,27 @@ import com.example.blogapi.exceptions.NotFoundException;
 import com.example.blogapi.exceptions.RequestException;
 import com.example.blogapi.models.Image;
 import com.example.blogapi.models.Post;
+import com.example.blogapi.utils.CloudynaryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class ImageController {
     @Autowired
     private ImageDao imageDao;
+
+    @Autowired
+    CloudynaryUtil cloudinaryUtil;
 
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -93,5 +101,21 @@ public class ImageController {
             throw new NotFoundException("id:"+id+" no encontrado, el post no existe","p-404");
         }
         imageDao.deleteImage(id);
+    }
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseBody
+    @RequestMapping(value = "api/image/cloud", method = RequestMethod.POST)
+    public Map postCloud(@RequestBody MultipartFile multipartFile) throws IOException {
+        return cloudinaryUtil.upload(multipartFile);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    @RequestMapping(value = "api/image/cloud/{id}", method = RequestMethod.DELETE)
+    public Map deleteCloud(@PathVariable String id) throws IOException {
+        Map result = cloudinaryUtil.delete(id);
+        imageDao.deleteImage(Integer.parseInt(id));
+        return result;
     }
 }

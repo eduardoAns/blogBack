@@ -1,7 +1,6 @@
 package com.example.blogapi.DAO;
 
 import com.example.blogapi.models.Image;
-import com.example.blogapi.models.Post;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,16 +41,16 @@ public class ImageDaoImp implements ImageDao {
 
     @Override
     public void deleteImage(Integer id) {
-        Post post = entityManager.find(Post.class ,id);
-        entityManager.remove(post);
+        Image image = entityManager.find(Image.class ,id);
+        entityManager.remove(image);
 
     }
 
     @Override
     public boolean existImageById(Integer id) {
 
-        Post post = entityManager.find(Post.class, id);
-        return entityManager.contains(post);
+        Image image = entityManager.find(Image.class, id);
+        return entityManager.contains(image);
 
     }
 }
