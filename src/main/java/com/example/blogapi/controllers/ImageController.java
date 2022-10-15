@@ -5,7 +5,7 @@ import com.example.blogapi.exceptions.BadRequestException;
 import com.example.blogapi.exceptions.NotFoundException;
 import com.example.blogapi.exceptions.RequestException;
 import com.example.blogapi.models.Image;
-import com.example.blogapi.utils.CloudynaryUtil;
+import com.example.blogapi.utils.CloudinaryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class ImageController {
     private ImageDao imageDao;
 
     @Autowired
-    CloudynaryUtil cloudinaryUtil;
+    CloudinaryUtil cloudinaryUtil;
 
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -103,9 +103,11 @@ public class ImageController {
 
     @RequestMapping(value = "api/image/cloud", method = RequestMethod.POST)
     public ResponseEntity<Map> postCloud(@RequestBody MultipartFile multipartFile) throws IOException {
+
         System.out.println("********************");
         System.out.println(multipartFile);
         Map result = cloudinaryUtil.upload(multipartFile);
+        System.out.println(result);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

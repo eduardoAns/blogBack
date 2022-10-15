@@ -13,12 +13,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class CloudynaryUtil {
+public class CloudinaryUtil {
     Cloudinary cloudinary;
 
     private Map<String, String> valuesMap = new HashMap<>();
 
-    public CloudynaryUtil() {
+    public CloudinaryUtil() {
         valuesMap.put("cloud_name", "dzvuzorsw");
         valuesMap.put("api_key", "383172519453544");
         valuesMap.put("api_secret", "mDh0coEn2giMNRrdD6SgD6Q-Y44");
