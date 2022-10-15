@@ -1,12 +1,10 @@
 package com.example.blogapi.controllers;
 
 import com.example.blogapi.DAO.ImageDao;
-import com.example.blogapi.DAO.PostDao;
 import com.example.blogapi.exceptions.BadRequestException;
 import com.example.blogapi.exceptions.NotFoundException;
 import com.example.blogapi.exceptions.RequestException;
 import com.example.blogapi.models.Image;
-import com.example.blogapi.models.Post;
 import com.example.blogapi.utils.CloudynaryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -103,12 +101,14 @@ public class ImageController {
         imageDao.deleteImage(id);
     }
 
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    @ResponseBody
     @RequestMapping(value = "api/image/cloud", method = RequestMethod.POST)
-    public Map postCloud(@RequestBody MultipartFile multipartFile) throws IOException {
-        return cloudinaryUtil.upload(multipartFile);
+    public ResponseEntity<Map> postCloud(@RequestBody MultipartFile multipartFile) throws IOException {
+        System.out.println("********************");
+        System.out.println(multipartFile);
+        Map result = cloudinaryUtil.upload(multipartFile);
+        return new ResponseEntity(result, HttpStatus.OK);
     }
+
 
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
