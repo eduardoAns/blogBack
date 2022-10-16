@@ -22,6 +22,6 @@ public class Tag {
     @NotEmpty @Getter @Setter @Column(name = "nombre")
     private String nombre;
 
-    @ManyToMany(mappedBy = "tags")
-    private List<Post> posts;
+    //@ManyToMany(mappedBy = "tags")
+    //private List<Post> posts;
 }

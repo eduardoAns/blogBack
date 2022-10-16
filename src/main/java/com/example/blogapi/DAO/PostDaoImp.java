@@ -1,7 +1,10 @@
 package com.example.blogapi.DAO;
 
+import com.example.blogapi.models.Image;
 import com.example.blogapi.models.Post;
+import com.example.blogapi.models.Tag;
 import com.example.blogapi.models.Usuario;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +21,9 @@ public class PostDaoImp implements PostDao {
     @PersistenceContext
     EntityManager entityManager;
 
+    @Autowired
+    private TagDao tagDao;
+
     @Override
     @Transactional
     public List<Post> getPosts() {
@@ -31,10 +37,45 @@ public class PostDaoImp implements PostDao {
         return entityManager.find(Post.class, id);
     }
 
+    private Integer getId(String titulo) {
+        String query = "SELECT id FROM Post WHERE titulo = :titulo";
+        List<Integer> id = entityManager.createQuery(query).setParameter("titulo", titulo).getResultList();
+        return id.get(0);
+    }
+
     @Override
-    public void postPost(Post post) {
-        entityManager.persist(post);
-        
+    public void postPost(Post post, List<Image> images, List<Tag> tags) {
+        System.out.println("***********PostDao***********");
+        entityManager.merge(post);
+        System.out.println("post realizado");
+        Integer postId = getId(post.getTitulo());
+
+        for(int i=0;i<images.size();i++){
+            images.get(i).setIdPost(postId);
+            System.out.println(images.get(i));
+            entityManager.merge(images.get(i));
+            System.out.println("agregar imagen al post realizado");
+
+        }
+
+        for(int i=0;i<tags.size();i++){
+            System.out.println("***********PostDaoTagInsert***********");
+            System.out.println(tags.get(i));
+            if(!tagDao.existTagByName(tags.get(i).getNombre())){
+                System.out.println("intentando agregar tag");
+                tagDao.postTag(tags.get(i));
+                System.out.println("tag no existente creado");
+                Integer tagId = tags.get(i).getId();
+                System.out.println("tagId: "+tagId);
+                tagDao.postTagInPost(tagId, postId);
+                System.out.println("agregar nuevo tag al post realizado");
+            }else {
+                System.out.println("intentando agregar tag existente al post");
+                Integer tagId = tagDao.getTagByName(tags.get(i).getNombre()).getId();
+                tagDao.postTagInPost(tagId, postId);
+                System.out.println("agregar tag  al post realizado");
+            }
+        }
     }
 
     @Override

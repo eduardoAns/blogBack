@@ -6,7 +6,9 @@ import com.example.blogapi.exceptions.BadRequestException;
 import com.example.blogapi.exceptions.NotFoundException;
 import com.example.blogapi.exceptions.RequestException;
 import com.example.blogapi.models.Comentario;
+import com.example.blogapi.models.Image;
 import com.example.blogapi.models.Post;
+import com.example.blogapi.models.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -66,11 +68,6 @@ public class PostController {
             throw new BadRequestException("el contenido es requerido","P-400");
         }
 
-        //if imagen hasfielderror return bad request
-        if( result.hasFieldErrors("imagen")){
-            throw new BadRequestException("el imagen es requerido","P-400");
-        }
-
         //if fechaCreacion hasfielderror return bad request
         if( result.hasFieldErrors("fechaCreacion")){
             throw new BadRequestException("la fecha de creacion es requerida","P-400");
@@ -91,9 +88,23 @@ public class PostController {
             throw new BadRequestException("el id de categoria es requerido","P-400");
         }
 
+            System.out.println("*********Post blog*********");
+            List<Image> Images = post.getImages();
+            List<Tag> Tags = post.getTags();
+            Post postForm = new Post();
+            postForm.setTitulo(post.getTitulo());
+            postForm.setSubtitulo(post.getSubtitulo());
+            postForm.setContenido(post.getContenido());
+            postForm.setFechaCreacion(post.getFechaCreacion());
+            postForm.setEstado(post.getEstado());
+            postForm.setIdUsuario(post.getIdUsuario());
+            postForm.setCategoria(post.getCategoria());
 
+            System.out.println(postForm);
+            System.out.println(Images);
+            System.out.println(Tags);
+            postDao.postPost(postForm, Images, Tags);
 
-        postDao.postPost(post);
     }
 
     @ResponseStatus(HttpStatus.OK)

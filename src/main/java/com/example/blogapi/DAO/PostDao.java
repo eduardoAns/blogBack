@@ -1,6 +1,8 @@
 package com.example.blogapi.DAO;
 
+import com.example.blogapi.models.Image;
 import com.example.blogapi.models.Post;
+import com.example.blogapi.models.Tag;
 
 
 import java.util.List;
@@ -10,7 +12,7 @@ public interface PostDao {
 
     Post getPostById(Integer id);
 
-    void postPost(Post post);
+    void postPost(Post post, List<Image> images, List<Tag> tags);
     
     void updatePost(Post post);
 

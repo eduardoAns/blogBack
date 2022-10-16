@@ -61,13 +61,19 @@ public class TagDaoImp implements TagDao{
     }
 
     @Override
-    public Tag getTagByName(String name) {
-        return entityManager.find(Tag.class, name);
+    public Tag getTagByName(String nombre) {
+        String query = "FROM Tag WHERE nombre = :nombre";
+        List<Tag> tag = entityManager.createQuery(query).setParameter("nombre", nombre).getResultList();
+        return tag.get(0);
     }
 
     @Override
-    public boolean existTagByName(String name) {
-        Tag tag = entityManager.find(Tag.class, name);
-        return entityManager.contains(tag);
+    public boolean existTagByName(String nombre) {
+        String query = "FROM Tag WHERE nombre = :nombre";
+        List<Tag> tag = entityManager.createQuery(query).setParameter("nombre", nombre).getResultList();
+        if(tag.isEmpty()){
+            return false;
+        }
+        return true;
     }
 }

@@ -36,7 +36,7 @@ public class Post {
     @NotEmpty @Getter @Setter @Column(name = "fecha_creacion")
     private String fechaCreacion;
 
-    @NotEmpty @Getter @Setter @Column(name = "fecha_actualizacion")
+    @Getter @Setter @Column(name = "fecha_actualizacion")
     private String fechaActualizacion;
 
     @ManyToOne

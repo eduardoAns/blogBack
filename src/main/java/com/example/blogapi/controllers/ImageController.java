@@ -101,14 +101,16 @@ public class ImageController {
         imageDao.deleteImage(id);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
     @RequestMapping(value = "api/image/cloud", method = RequestMethod.POST)
-    public ResponseEntity<Map> postCloud(@RequestBody MultipartFile multipartFile) throws IOException {
+    public Map postCloud(@RequestBody MultipartFile multipartFile) throws IOException {
 
         System.out.println("********************");
         System.out.println(multipartFile);
         Map result = cloudinaryUtil.upload(multipartFile);
         System.out.println(result);
-        return new ResponseEntity(result, HttpStatus.OK);
+        return result;
     }
 
 
@@ -116,7 +118,12 @@ public class ImageController {
     @ResponseBody
     @RequestMapping(value = "api/image/cloud/{id}", method = RequestMethod.DELETE)
     public Map deleteCloud(@PathVariable String id) throws IOException {
+        System.out.println("**********delete*********");
+        System.out.println(id);
         Map result = cloudinaryUtil.delete(id);
+        if(!imageDao.existImageById(id)){
+            throw new NotFoundException("id:"+id+" no encontrado, la imagen no existe en bd","p-404");
+        }
         imageDao.deleteImage(id);
         return result;
     }
