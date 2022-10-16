@@ -23,7 +23,7 @@ public class ImageDaoImp implements ImageDao {
     }
 
     @Override
-    public Image getImageById(Integer id) {
+    public Image getImageById(String id) {
 
         return entityManager.find(Image.class, id);
     }
@@ -40,14 +40,14 @@ public class ImageDaoImp implements ImageDao {
     }
 
     @Override
-    public void deleteImage(Integer id) {
+    public void deleteImage(String id) {
         Image image = entityManager.find(Image.class ,id);
         entityManager.remove(image);
 
     }
 
     @Override
-    public boolean existImageById(Integer id) {
+    public boolean existImageById(String id) {
 
         Image image = entityManager.find(Image.class, id);
         return entityManager.contains(image);

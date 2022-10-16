@@ -40,7 +40,7 @@ public class ImageController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     @RequestMapping(value="api/image/{id}" , method = RequestMethod.GET)
-    public Image getImageById(@PathVariable Integer id){
+    public Image getImageById(@PathVariable String id){
 
         if(!imageDao.existImageById(id)){
             throw new NotFoundException("id:"+id+" no encontrado, el post no existe","p-404");
@@ -94,7 +94,7 @@ public class ImageController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     @RequestMapping(value="api/image/{id}" , method = RequestMethod.DELETE)
-    public void deleteImage(@PathVariable Integer id){
+    public void deleteImage(@PathVariable String id){
         if(!imageDao.existImageById(id)){
             throw new NotFoundException("id:"+id+" no encontrado, el post no existe","p-404");
         }
@@ -117,7 +117,7 @@ public class ImageController {
     @RequestMapping(value = "api/image/cloud/{id}", method = RequestMethod.DELETE)
     public Map deleteCloud(@PathVariable String id) throws IOException {
         Map result = cloudinaryUtil.delete(id);
-        imageDao.deleteImage(Integer.parseInt(id));
+        imageDao.deleteImage(id);
         return result;
     }
 }

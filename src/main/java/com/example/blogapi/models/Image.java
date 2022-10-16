@@ -17,9 +17,8 @@ import javax.validation.constraints.NotNull;
 public class Image {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter @Column(name = "id")
-    private Integer id;
+    private String id;
 
     @Getter @Setter @Column(name = "id_post")
     @NotNull

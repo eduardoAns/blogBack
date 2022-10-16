@@ -9,13 +9,13 @@ public interface ImageDao {
 
     List<Image> getImages();
 
-    Image getImageById(Integer id);
+    Image getImageById(String id);
 
     void postImage(Image Image);
 
     void updateImage(Image image);
 
-    void deleteImage(Integer id);
+    void deleteImage(String id);
 
-    boolean existImageById(Integer id);
+    boolean existImageById(String id);
 }
