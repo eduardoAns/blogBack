@@ -25,5 +25,7 @@ public interface TagDao {
 
     void updateTagInPost(Integer id, Integer tagId);
 
+    boolean existPostInListTag(Integer idPost, Integer idTag);
+
 
 }

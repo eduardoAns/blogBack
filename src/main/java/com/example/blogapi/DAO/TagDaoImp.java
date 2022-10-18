@@ -64,7 +64,7 @@ public class TagDaoImp implements TagDao{
     public void updateTagInPost(Integer idTag, Integer idPost ) {
 
         // post id_tag and id_post in lista_tags
-        String query ="UDATE INTO lista_tags (id_tag, id_post) VALUES ("+idTag+", "+idPost+")";
+        String query ="UPDATE INTO lista_tags (id_tag, id_post) VALUES ("+idTag+", "+idPost+")";
         entityManager.createNativeQuery(query).executeUpdate();
 
     }
@@ -80,6 +80,18 @@ public class TagDaoImp implements TagDao{
     public boolean existTagByName(String nombre) {
         String query = "FROM Tag WHERE nombre = :nombre";
         List<Tag> tag = entityManager.createQuery(query).setParameter("nombre", nombre).getResultList();
+        if(tag.isEmpty()){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean existPostInListTag(Integer idPost, Integer idTag) {
+        String query = "FROM Tag WHERE id_post = :idPost AND id_tag = :idTag";
+        List<Tag> tag = entityManager.createQuery(query)
+                        .setParameter("idPost", idPost)
+                        .setParameter("idTag", idTag).getResultList();
         if(tag.isEmpty()){
             return false;
         }
