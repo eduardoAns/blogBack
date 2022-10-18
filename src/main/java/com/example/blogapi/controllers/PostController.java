@@ -87,10 +87,9 @@ public class PostController {
         if( result.hasFieldErrors("idCategoria")){
             throw new BadRequestException("el id de categoria es requerido","P-400");
         }
-
-            System.out.println("*********Post blog*********");
             List<Image> Images = post.getImages();
             List<Tag> Tags = post.getTags();
+
             Post postForm = new Post();
             postForm.setTitulo(post.getTitulo());
             postForm.setSubtitulo(post.getSubtitulo());
@@ -100,9 +99,6 @@ public class PostController {
             postForm.setIdUsuario(post.getIdUsuario());
             postForm.setCategoria(post.getCategoria());
 
-            System.out.println(postForm);
-            System.out.println(Images);
-            System.out.println(Tags);
             postDao.postPost(postForm, Images, Tags);
 
     }
@@ -152,10 +148,20 @@ public class PostController {
             throw new BadRequestException("el id de categoria es requerido","P-400");
         }
 
+        List<Image> Images = post.getImages();
+        List<Tag> Tags = post.getTags();
 
+        Post postForm = new Post();
+        postForm.setId(post.getId());
+        postForm.setTitulo(post.getTitulo());
+        postForm.setSubtitulo(post.getSubtitulo());
+        postForm.setContenido(post.getContenido());
+        postForm.setFechaCreacion(post.getFechaCreacion());
+        postForm.setEstado(post.getEstado());
+        postForm.setIdUsuario(post.getIdUsuario());
+        postForm.setCategoria(post.getCategoria());
 
-
-        postDao.updatePost(post);
+        postDao.updatePost(post, Images, Tags);
     }
 
     @ResponseStatus(HttpStatus.OK)

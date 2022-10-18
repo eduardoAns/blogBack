@@ -14,7 +14,7 @@ public interface PostDao {
 
     void postPost(Post post, List<Image> images, List<Tag> tags);
     
-    void updatePost(Post post);
+    void updatePost(Post post, List<Image> images, List<Tag> tags);
 
     void deletePost(Integer id);
 

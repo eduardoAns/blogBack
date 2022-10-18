@@ -45,42 +45,60 @@ public class PostDaoImp implements PostDao {
 
     @Override
     public void postPost(Post post, List<Image> images, List<Tag> tags) {
-        System.out.println("***********PostDao***********");
         entityManager.merge(post);
-        System.out.println("post realizado");
         Integer postId = getId(post.getTitulo());
 
         for(int i=0;i<images.size();i++){
             images.get(i).setIdPost(postId);
             System.out.println(images.get(i));
             entityManager.merge(images.get(i));
-            System.out.println("agregar imagen al post realizado");
 
         }
 
         for(int i=0;i<tags.size();i++){
-            System.out.println("***********PostDaoTagInsert***********");
             System.out.println(tags.get(i));
             if(!tagDao.existTagByName(tags.get(i).getNombre())){
-                System.out.println("intentando agregar tag");
                 tagDao.postTag(tags.get(i));
-                System.out.println("tag no existente creado");
                 Integer tagId = tags.get(i).getId();
-                System.out.println("tagId: "+tagId);
                 tagDao.postTagInPost(tagId, postId);
-                System.out.println("agregar nuevo tag al post realizado");
             }else {
-                System.out.println("intentando agregar tag existente al post");
                 Integer tagId = tagDao.getTagByName(tags.get(i).getNombre()).getId();
                 tagDao.postTagInPost(tagId, postId);
-                System.out.println("agregar tag  al post realizado");
             }
         }
     }
 
+    private void update(Post post) {
+        String query = "UPDATE Post SET titulo = :titulo, subtitulo = :subtitulo, contenido = :contenido, fecha_actualizacion = :fecha, id_categoria = :idCategoria WHERE id = :id";
+            entityManager.createQuery(query)
+            .setParameter("titulo", post.getTitulo())
+            .setParameter("subtitulo", post.getSubtitulo())
+            .setParameter("contenido", post.getContenido())
+            .setParameter("fecha", post.getFechaCreacion())
+            .setParameter("idCategoria", post.getCategoria().getId())
+            .setParameter("id", post.getId()).executeUpdate();
+    }
+
     @Override
-    public void updatePost(Post post) {
-        entityManager.merge(post);
+    public void updatePost(Post post, List<Image> images, List<Tag> tags) {
+        update(post);
+        Integer postId = getId(post.getTitulo());
+
+        for(int i=0;i<images.size();i++){
+                images.get(i).setIdPost(postId);
+                entityManager.merge(images.get(i));
+        }
+
+        for(int i=0;i<tags.size();i++){
+            if(!tagDao.existTagByName(tags.get(i).getNombre())){
+                tagDao.postTag(tags.get(i));
+                Integer tagId = tags.get(i).getId();
+                tagDao.postTagInPost(tagId, postId);
+            }else {
+                Integer tagId = tagDao.getTagByName(tags.get(i).getNombre()).getId();
+                tagDao.postTagInPost(tagId, postId);
+            }
+        }
     }
 
     @Override
