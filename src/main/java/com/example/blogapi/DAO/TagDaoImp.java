@@ -64,7 +64,7 @@ public class TagDaoImp implements TagDao{
     public void updateTagInPost(Integer idTag, Integer idPost ) {
 
         // post id_tag and id_post in lista_tags
-        String query ="UPDATE lista_tags SET id_tag = :idTag WHERE id_post = :idPost";
+        String query ="UPDATE ListaTags SET id_tag = :idTag WHERE id_post = :idPost";
 
         entityManager.createQuery(query)
                 .setParameter("idTag", idTag)
@@ -91,7 +91,7 @@ public class TagDaoImp implements TagDao{
 
     @Override
     public boolean existPostInListTag(Integer idPost, Integer idTag) {
-        String query = "FROM lista_tags WHERE id_post = :idPost AND id_tag = :idTag";
+        String query = "FROM ListaTags WHERE id_post = :idPost AND id_tag = :idTag";
         List<Tag> tag = entityManager.createQuery(query)
                         .setParameter("idPost", idPost)
                         .setParameter("idTag", idTag).getResultList();
