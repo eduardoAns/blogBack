@@ -64,8 +64,11 @@ public class TagDaoImp implements TagDao{
     public void updateTagInPost(Integer idTag, Integer idPost ) {
 
         // post id_tag and id_post in lista_tags
-        String query ="UPDATE INTO lista_tags (id_tag, id_post) VALUES ("+idTag+", "+idPost+")";
-        entityManager.createNativeQuery(query).executeUpdate();
+        String query ="UPDATE lista_tags SET id_tag = :idTag WHERE id_post = :idPost";
+
+        entityManager.createQuery(query)
+                .setParameter("idTag", idTag)
+                .setParameter("idPost", idPost).executeUpdate();
 
     }
 
