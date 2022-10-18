@@ -91,7 +91,7 @@ public class TagDaoImp implements TagDao{
 
     @Override
     public boolean existPostInListTag(Integer idPost, Integer idTag) {
-        String query = "FROM Tag WHERE id_post = :idPost AND id_tag = :idTag";
+        String query = "FROM lista_tags WHERE id_post = :idPost AND id_tag = :idTag";
         List<Tag> tag = entityManager.createQuery(query)
                         .setParameter("idPost", idPost)
                         .setParameter("idTag", idTag).getResultList();
