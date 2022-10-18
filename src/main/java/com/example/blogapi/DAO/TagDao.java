@@ -23,5 +23,7 @@ public interface TagDao {
 
     void postTagInPost(Integer id, Integer tagId);
 
+    void updateTagInPost(Integer id, Integer tagId);
+
 
 }

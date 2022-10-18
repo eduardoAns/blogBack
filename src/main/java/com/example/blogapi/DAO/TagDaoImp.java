@@ -61,6 +61,15 @@ public class TagDaoImp implements TagDao{
     }
 
     @Override
+    public void updateTagInPost(Integer idTag, Integer idPost ) {
+
+        // post id_tag and id_post in lista_tags
+        String query ="UDATE INTO lista_tags (id_tag, id_post) VALUES ("+idTag+", "+idPost+")";
+        entityManager.createNativeQuery(query).executeUpdate();
+
+    }
+
+    @Override
     public Tag getTagByName(String nombre) {
         String query = "FROM Tag WHERE nombre = :nombre";
         List<Tag> tag = entityManager.createQuery(query).setParameter("nombre", nombre).getResultList();
