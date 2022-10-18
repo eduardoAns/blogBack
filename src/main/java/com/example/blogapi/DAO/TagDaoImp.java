@@ -88,7 +88,6 @@ public class TagDaoImp implements TagDao{
         }
         return true;
     }
-
     @Override
     public boolean existPostInListTag(Integer idPost, Integer idTag) {
         String query = "FROM Lista_tags WHERE id_post = :idPost AND id_tag = :idTag";
