@@ -97,7 +97,7 @@ public class PostDaoImp implements PostDao {
             }else {
 
                 if(tagDao.existPostInListTag(postId, tags.get(i).getId())){
-                    tagDao.updateTagInPost(postId, tags.get(i).getId());
+                    tagDao.updateTagInPost(tags.get(i).getId(), postId);
                 }else {
                     Integer tagId = tagDao.getTagByName(tags.get(i).getNombre()).getId();
                     tagDao.postTagInPost(tagId, postId);
