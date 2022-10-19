@@ -23,9 +23,7 @@ public interface TagDao {
 
     void postTagInPost(Integer id, Integer tagId);
 
-    void updateTagInPost(Integer id, Integer tagId);
+    List<Tag> getTagsByPostId(Integer id);
 
-    boolean existPostInListTag(Integer idPost, Integer idTag);
-
-
+    void deleteTagInPost(Integer postId, Integer tagId);
 }

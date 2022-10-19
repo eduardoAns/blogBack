@@ -88,6 +88,36 @@ public class PostDaoImp implements PostDao {
                 images.get(i).setIdPost(postId);
                 entityManager.merge(images.get(i));
         }
+        System.out.println("tags que vienen desde front: "+tags);
+        //tengo array de tags y quiero actualizar, algunos de estos tags pueden ser nuevos y otros tags tienen que ser eliminados
+        //primero tengo que obtener los tags que ya estan en la base de datos
+        List<Tag> tagsInPost = tagDao.getTagsByPostId(postId);
+        System.out.println("lista de tags que tiene el post: "+tagsInPost);
+        //tengo que obtener los tags que ya estan en la base de datos y que no estan en el array de tags que me llega
+        List<Tag> tagsToDelete = tagsInPost.stream().filter(tag -> !tags.contains(tag)).collect(Collectors.toList());
+        System.out.println("tags a eliminar"+tagsToDelete);
+        //tengo que obtener los tags que estan en el array de tags que me llega y que no estan en la base de datos
+        List<Tag> tagsToInsert = tags.stream().filter(tag -> !tagsInPost.contains(tag)).collect(Collectors.toList());
+        System.out.println("tags a insertar"+tagsToInsert);
+
+        //elimino los tags que no estan en el array de tags que me llega
+        for(int i=0;i<tagsToDelete.size();i++){
+            tagDao.deleteTagInPost(postId, tagsToDelete.get(i).getId());
+        }
+
+        //inserto los tags que estan en el array de tags que me llega y que no estan en la base de datos
+        for(int i=0;i<tagsToInsert.size();i++){
+            if(!tagDao.existTagByName(tagsToInsert.get(i).getNombre())){
+                tagDao.postTag(tagsToInsert.get(i));
+                Integer tagId = tagsToInsert.get(i).getId();
+                tagDao.postTagInPost(tagId, postId);
+            }else {
+                Integer tagId = tagDao.getTagByName(tagsToInsert.get(i).getNombre()).getId();
+                tagDao.postTagInPost(tagId, postId);
+            }
+        }
+
+
 
         for(int i=0;i<tags.size();i++){
             if(!tagDao.existTagByName(tags.get(i).getNombre())){
@@ -95,13 +125,10 @@ public class PostDaoImp implements PostDao {
                 Integer tagId = tags.get(i).getId();
                 tagDao.postTagInPost(tagId, postId);
             }else {
+                Integer tagId = tagDao.getTagByName(tags.get(i).getNombre()).getId();
+                tagDao.postTagInPost(tagId, postId);
 
-                if(tagDao.existPostInListTag(postId, tags.get(i).getId())){
-                    tagDao.updateTagInPost(tags.get(i).getId(), postId);
-                }else {
-                    Integer tagId = tagDao.getTagByName(tags.get(i).getNombre()).getId();
-                    tagDao.postTagInPost(tagId, postId);
-                }
+
 
             }
         }

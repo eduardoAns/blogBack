@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @Transactional
@@ -61,18 +62,6 @@ public class TagDaoImp implements TagDao{
     }
 
     @Override
-    public void updateTagInPost(Integer idTag, Integer idPost ) {
-
-        // post id_tag and id_post in lista_tags
-        String query ="UPDATE Lista_tags SET id_tag = :idTag WHERE id_post = :idPost";
-
-        entityManager.createQuery(query)
-                .setParameter("idTag", idTag)
-                .setParameter("idPost", idPost).executeUpdate();
-
-    }
-
-    @Override
     public Tag getTagByName(String nombre) {
         String query = "FROM Tag WHERE nombre = :nombre";
         List<Tag> tag = entityManager.createQuery(query).setParameter("nombre", nombre).getResultList();
@@ -88,15 +77,20 @@ public class TagDaoImp implements TagDao{
         }
         return true;
     }
+
     @Override
-    public boolean existPostInListTag(Integer idPost, Integer idTag) {
-        String query = "FROM Lista_tags WHERE id_post = :idPost AND id_tag = :idTag";
-        List<Tag> tag = entityManager.createQuery(query)
-                        .setParameter("idPost", idPost)
-                        .setParameter("idTag", idTag).getResultList();
-        if(tag.isEmpty()){
-            return false;
-        }
-        return true;
+    public void deleteTagInPost(Integer idTag, Integer idPost) {
+        String query ="DELETE FROM lista_tags WHERE id_tag = "+idTag+" AND id_post = "+idPost;
+        entityManager.createNativeQuery(query).executeUpdate();
     }
+
+    @Override
+    public List<Tag> getTagsByPostId (Integer idPost){
+        String query = "SELECT id_tag FROM lista_tags WHERE id_post = :idPost";
+        List<Integer> listaIdTags = entityManager.createNativeQuery(query).setParameter("idPost", idPost).getResultList();
+        List<Tag> listaTags = getTags();
+        List<Tag> response = listaTags.stream().filter(t -> listaIdTags.contains(t.getId())).collect(Collectors.toList());
+        return response;
+    }
+
 }
