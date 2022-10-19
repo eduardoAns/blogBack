@@ -79,8 +79,8 @@ public class TagDaoImp implements TagDao{
     }
 
     @Override
-    public void deleteTagInPost(Integer idTag, Integer idPost) {
-        String query ="DELETE FROM lista_tags WHERE id_tag = "+idTag+" AND id_post = "+idPost;
+    public void deleteTagInPost(Integer postId, Integer tagId) {
+        String query ="DELETE FROM lista_tags WHERE id_tag = "+tagId+" AND id_post = "+postId;
         entityManager.createNativeQuery(query).executeUpdate();
     }
 
