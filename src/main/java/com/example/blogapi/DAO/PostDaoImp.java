@@ -117,21 +117,6 @@ public class PostDaoImp implements PostDao {
             }
         }
 
-
-
-        for(int i=0;i<tags.size();i++){
-            if(!tagDao.existTagByName(tags.get(i).getNombre())){
-                tagDao.postTag(tags.get(i));
-                Integer tagId = tags.get(i).getId();
-                tagDao.postTagInPost(tagId, postId);
-            }else {
-                Integer tagId = tagDao.getTagByName(tags.get(i).getNombre()).getId();
-                tagDao.postTagInPost(tagId, postId);
-
-
-
-            }
-        }
     }
 
     @Override
