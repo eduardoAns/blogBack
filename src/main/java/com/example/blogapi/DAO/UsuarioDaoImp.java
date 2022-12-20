@@ -1,5 +1,6 @@
 package com.example.blogapi.DAO;
 
+import com.example.blogapi.models.Post;
 import com.example.blogapi.models.Usuario;
 
 import de.mkammerer.argon2.Argon2;
@@ -76,5 +77,16 @@ public class UsuarioDaoImp implements UsuarioDao{
 
         Usuario usuario = entityManager.find(Usuario.class, id);
         return entityManager.contains(usuario);
+    }
+
+    @Override
+    public void updateUsuarioDetails(Usuario usuario) {
+        String query = "UPDATE Usuario SET nombre = :nombre, apellido_paterno = :apellido, descripcion = :descripcion WHERE id = :id";
+        entityManager.createQuery(query)
+                .setParameter("nombre", usuario.getNombre())
+                .setParameter("apellido", usuario.getApellidoPaterno())
+                .setParameter("descripcion", usuario.getDescripcion())
+                .setParameter("id", usuario.getId())
+                .executeUpdate();
     }
 }
