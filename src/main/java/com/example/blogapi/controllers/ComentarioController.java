@@ -96,8 +96,6 @@ public class ComentarioController {
             throw new NotFoundException("id:"+comentario.getId()+" no encontrado, el comentario no existe","p-404");
         }
         //if post not exist return Not found exception
-
-
         if(result.hasFieldErrors("id")){
             throw new BadRequestException("el id es requerido","P-400");
         }
