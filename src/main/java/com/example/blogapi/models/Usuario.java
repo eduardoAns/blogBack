@@ -57,14 +57,24 @@ public class Usuario {
     //@Getter @Setter @JoinColumn(name = "id_rol")
     //private Rol rol;
 
-    @Getter @Setter
+    @Getter
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
     private List<Post> posts;
 
-    @Getter @Setter
+    @Getter
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
     private List<Comentario> comentarios;
+
+    @Getter
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_user", referencedColumnName = "id")
+    private List<Avatar> avatar;
+
+    @Getter
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_user", referencedColumnName = "id")
+    private List<SocialMedia> socialMedias;
 
 }

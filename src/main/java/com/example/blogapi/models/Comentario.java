@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "comentarios")
-@ToString @EqualsAndHashCode
+@ToString
 public class Comentario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "images")
 @ToString
-@EqualsAndHashCode
 public class Image {
 
     @Id
