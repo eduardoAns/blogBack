@@ -50,9 +50,7 @@ public class PostDaoImp implements PostDao {
 
         for(int i=0;i<images.size();i++){
             images.get(i).setIdPost(postId);
-            System.out.println(images.get(i));
             entityManager.merge(images.get(i));
-
         }
 
         for(int i=0;i<tags.size();i++){

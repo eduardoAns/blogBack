@@ -1,7 +1,6 @@
 package com.example.blogapi.DAO;
 
 import com.example.blogapi.models.Avatar;
-import com.example.blogapi.models.Usuario;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,7 +42,16 @@ public class AvatarDaoImp implements AvatarDao {
     }
 
     @Override
-    public void deleteAvatar(Integer id) {
+    public void deleteAvatarByUserId(Integer id) {
+        String query ="DELETE FROM Avatar WHERE id_user = :idUser";
+            entityManager.createQuery(query)
+            .setParameter("idUser", id)
+            .executeUpdate();
+    }
 
+    @Override
+    public void deleteAvatar(String id) {
+        Avatar avatar = entityManager.find(Avatar.class ,id);
+        entityManager.remove(avatar);
     }
 }

@@ -1,5 +1,7 @@
 package com.example.blogapi.DAO;
 
+import com.example.blogapi.models.Avatar;
+import com.example.blogapi.models.SocialMedia;
 import com.example.blogapi.models.Usuario;
 
 import java.util.List;

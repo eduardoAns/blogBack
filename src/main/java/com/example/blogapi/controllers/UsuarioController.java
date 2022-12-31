@@ -137,7 +137,13 @@ public class UsuarioController {
             throw new BadRequestException("la descripcion es requerida","P-400");
         }
 
-        usuarioDao.updateUsuarioDetails(usuario);
+        Usuario detailUser = new Usuario();
+        detailUser.setId(usuario.getId());
+        detailUser.setNombre(usuario.getNombre());
+        detailUser.setApellidoPaterno(usuario.getApellidoPaterno());
+        detailUser.setDescripcion(usuario.getDescripcion());
+        System.out.println(usuario);
+        usuarioDao.updateUsuario(usuario);
     }
 
 

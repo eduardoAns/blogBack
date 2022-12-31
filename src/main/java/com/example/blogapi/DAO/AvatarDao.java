@@ -12,6 +12,8 @@ public interface AvatarDao {
 
     void updateAvatar(Avatar avatar);
 
-    void deleteAvatar(Integer id);
+    void deleteAvatarByUserId(Integer id);
+
+    void deleteAvatar(String id);
 
 }
