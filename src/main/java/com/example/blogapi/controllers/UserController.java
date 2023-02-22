@@ -1,6 +1,7 @@
 package com.example.blogapi.controllers;
 
 
+import com.example.blogapi.dto.UserInputDTO;
 import com.example.blogapi.exceptions.RequestException;
 import com.example.blogapi.models.Usuario;
 import com.example.blogapi.services.UserService;
@@ -40,7 +41,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     @PostMapping
-    public void postUsuario(@Valid @RequestBody Usuario usuario, BindingResult result){
+    public void postUsuario(@Valid @RequestBody UserInputDTO usuario, BindingResult result){
         userService.createUser(usuario, result);
     }
 

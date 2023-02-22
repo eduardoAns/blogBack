@@ -28,7 +28,6 @@ public class ValidateUtil {
 
         String idToken = jwtUtil.getKey(userToken);
         if(!Objects.equals(idToken, userId.toString())) {
-            System.out.println("entro al if");
             throw new BadRequestException("el usuario no corresponde", "p-401");
         }
 
