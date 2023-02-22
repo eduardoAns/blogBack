@@ -1,10 +1,10 @@
-package com.example.blogapi.DAO;
+package com.example.blogapi.repository;
 
 import com.example.blogapi.models.Tag;
 
 import java.util.List;
 
-public interface TagDao {
+public interface TagRepository {
     List<Tag> getTags();
 
     void postTag(Tag tag);

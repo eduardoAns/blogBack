@@ -1,11 +1,10 @@
-package com.example.blogapi.DAO;
+package com.example.blogapi.repository;
 
 import com.example.blogapi.models.Image;
-import com.example.blogapi.models.Post;
 
 import java.util.List;
 
-public interface ImageDao {
+public interface ImageRepository {
 
     List<Image> getImages();
 

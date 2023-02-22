@@ -1,12 +1,10 @@
-package com.example.blogapi.DAO;
+package com.example.blogapi.repository;
 
-import com.example.blogapi.models.Avatar;
-import com.example.blogapi.models.SocialMedia;
 import com.example.blogapi.models.Usuario;
 
 import java.util.List;
 
-public interface UsuarioDao {
+public interface UserRepository {
 
     List<Usuario> getUsuarios();
 
@@ -15,8 +13,6 @@ public interface UsuarioDao {
     void deleteUsuario(Long id);
 
     void postUsuario(Usuario usuario);
-
-    void updateUsuario(Usuario usuario);
 
     void updateUsuarioDetails(Usuario usuario);
 

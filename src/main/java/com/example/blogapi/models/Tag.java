@@ -7,6 +7,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -22,6 +24,8 @@ public class Tag {
     @NotEmpty @Getter @Setter @Column(name = "nombre")
     private String nombre;
 
+    @Getter @Setter @Column(name = "fecha_creacion")
+    private LocalDateTime fechaCreacion;
     //@ManyToMany(mappedBy = "tags")
     //private List<Post> posts;
 }

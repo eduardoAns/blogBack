@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -47,7 +48,7 @@ public class Usuario {
     @Getter @Setter @Column(name = "descripcion")
     private String descripcion;
 
-    @NotEmpty @Getter @Setter @Column(name = "fecha_creacion")
+    @Getter @Setter @Column(name = "fecha_creacion")
     private String fechaCreacion;
 
     @Getter @Setter @Column(name = "fecha_actualizacion")

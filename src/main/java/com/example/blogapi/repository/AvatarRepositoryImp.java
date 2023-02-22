@@ -1,4 +1,4 @@
-package com.example.blogapi.DAO;
+package com.example.blogapi.repository;
 
 import com.example.blogapi.models.Avatar;
 import org.springframework.stereotype.Repository;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class AvatarDaoImp implements AvatarDao {
+public class AvatarRepositoryImp implements AvatarRepository {
 
     @PersistenceContext
     EntityManager entityManager;
@@ -38,7 +38,7 @@ public class AvatarDaoImp implements AvatarDao {
 
     @Override
     public void updateAvatar(Avatar avatar) {
-
+        entityManager.merge(avatar);
     }
 
     @Override
@@ -47,6 +47,8 @@ public class AvatarDaoImp implements AvatarDao {
             entityManager.createQuery(query)
             .setParameter("idUser", id)
             .executeUpdate();
+            
+            
     }
 
     @Override

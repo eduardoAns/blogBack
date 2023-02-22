@@ -1,6 +1,6 @@
 package com.example.blogapi.controllers;
 
-import com.example.blogapi.DAO.CategoriaDao;
+import com.example.blogapi.repository.CategoryRepository;
 import com.example.blogapi.exceptions.RequestException;
 import com.example.blogapi.models.Categoria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,21 +11,21 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-public class CategoriaController {
+public class CategoryController {
 
     @Autowired
-    private CategoriaDao categoriaDao;
+    private CategoryRepository categoryRepository;
 
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     @RequestMapping(value="api/categoria", method = RequestMethod.GET)
     public List<Categoria> getCategorias(){
 
-        if(categoriaDao.getCategorias().isEmpty()){
+        if(categoryRepository.getCategorias().isEmpty()){
             throw new RequestException("P-500", HttpStatus.INTERNAL_SERVER_ERROR,"Error al traer los datos, json vacio");
         }
 
-        return categoriaDao.getCategorias();
+        return categoryRepository.getCategorias();
     };
 
 }

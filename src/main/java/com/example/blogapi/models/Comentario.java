@@ -51,7 +51,4 @@ public class Comentario {
     @NotEmpty @Getter @Setter @Column(name = "estado")
     private String estado;
 
-    public Comentario() {
-    }
-
 }
