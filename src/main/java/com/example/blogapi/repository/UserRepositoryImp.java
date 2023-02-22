@@ -1,4 +1,4 @@
-package com.example.blogapi.DAO;
+package com.example.blogapi.repository;
 
 import com.example.blogapi.models.Avatar;
 import com.example.blogapi.models.SocialMedia;
@@ -17,16 +17,16 @@ import java.util.stream.Collectors;
 
 @Repository
 @Transactional
-public class UsuarioDaoImp implements UsuarioDao{
+public class UserRepositoryImp implements UserRepository {
 
     @PersistenceContext
     EntityManager entityManager;
 
     @Autowired
-    private SocialMediaDao socialMediaDao;
+    private SocialMediaRepository socialMediaRepository;
 
     @Autowired
-    private AvatarDao avatarDao;
+    private AvatarRepository avatarRepository;
 
     @Override
     @Transactional
@@ -55,54 +55,6 @@ public class UsuarioDaoImp implements UsuarioDao{
     }
 
     @Override
-    public void updateUsuario(Usuario usuario) {
-        System.out.println("entrando update usuario");
-
-        Usuario detailUser = new Usuario();
-        detailUser.setId(usuario.getId());
-        detailUser.setNombre(usuario.getNombre());
-        detailUser.setApellidoPaterno(usuario.getApellidoPaterno());
-        detailUser.setDescripcion(usuario.getDescripcion());
-        List<SocialMedia> socialMedias = usuario.getSocialMedias();
-
-
-        updateUsuarioDetails(detailUser);
-        System.out.println("usuario details actualizado");
-
-        //AVATAR
-        avatarDao.deleteAvatarByUserId(usuario.getId());
-
-        if(!usuario.getAvatar().isEmpty()){
-            Avatar avatar = usuario.getAvatar().get(0);
-            entityManager.merge(avatar);
-            System.out.println("avatar actualizado");
-        }
-        ;
-
-        // redes sociales
-
-        List<SocialMedia> socialMediaListBd = socialMediaDao.getSocialMediasByUserId(usuario.getId());
-        System.out.println(socialMediaListBd);
-        if(!socialMediaListBd.isEmpty()){
-            List<SocialMedia> socialMediaListDelete = socialMediaListBd.stream().filter((social)->!socialMedias.contains(social)).collect(Collectors.toList());
-            System.out.println("deletenado social media");
-            System.out.println(socialMediaListDelete);
-
-            socialMediaListDelete.forEach((socialMedia) -> entityManager.remove(socialMedia));
-
-        }
-        if(!socialMedias.isEmpty()){
-            List<SocialMedia> socialMediaListInsert = socialMedias.stream().filter((social)->!socialMediaListBd.contains(social)).collect(Collectors.toList());
-            System.out.println("insertnado social media");
-            System.out.println(socialMediaListInsert);
-            socialMediaListInsert.forEach((socialMedia) -> entityManager.merge(socialMedia));
-        }
-
-
-
-    }
-
-    @Override
     public Usuario obtenerUsuarioPorCredenciales(Usuario usuario) {
 
         String query ="FROM Usuario WHERE email = :email";
@@ -113,6 +65,7 @@ public class UsuarioDaoImp implements UsuarioDao{
         if(lista.isEmpty()){
             return null;
         }
+        
         String passwordHashed = lista.get(0).getPassword();
         Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
         if (argon2.verify(passwordHashed, usuario.getPassword())){

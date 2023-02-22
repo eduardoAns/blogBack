@@ -1,9 +1,8 @@
-package com.example.blogapi.DAO;
+package com.example.blogapi.repository;
 
 import com.example.blogapi.models.Image;
 import com.example.blogapi.models.Post;
 import com.example.blogapi.models.Tag;
-import com.example.blogapi.models.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,13 +15,10 @@ import java.util.stream.Collectors;
 
 @Repository
 @Transactional
-public class PostDaoImp implements PostDao {
+public class PostRepositoryImp implements PostRepository {
 
     @PersistenceContext
     EntityManager entityManager;
-
-    @Autowired
-    private TagDao tagDao;
 
     @Override
     @Transactional
@@ -37,36 +33,20 @@ public class PostDaoImp implements PostDao {
         return entityManager.find(Post.class, id);
     }
 
-    private Integer getId(String titulo) {
+    @Override
+    public Integer getPostIdByTitle(String titulo) {
         String query = "SELECT id FROM Post WHERE titulo = :titulo";
         List<Integer> id = entityManager.createQuery(query).setParameter("titulo", titulo).getResultList();
         return id.get(0);
     }
 
     @Override
-    public void postPost(Post post, List<Image> images, List<Tag> tags) {
+    public void createPost(Post post) {
         entityManager.merge(post);
-        Integer postId = getId(post.getTitulo());
-
-        for(int i=0;i<images.size();i++){
-            images.get(i).setIdPost(postId);
-            entityManager.merge(images.get(i));
-        }
-
-        for(int i=0;i<tags.size();i++){
-            System.out.println(tags.get(i));
-            if(!tagDao.existTagByName(tags.get(i).getNombre())){
-                tagDao.postTag(tags.get(i));
-                Integer tagId = tags.get(i).getId();
-                tagDao.postTagInPost(tagId, postId);
-            }else {
-                Integer tagId = tagDao.getTagByName(tags.get(i).getNombre()).getId();
-                tagDao.postTagInPost(tagId, postId);
-            }
-        }
     }
 
-    private void update(Post post) {
+    @Override
+    public void updateDetailsPost(Post post) {
         String query = "UPDATE Post SET titulo = :titulo, subtitulo = :subtitulo, contenido = :contenido, fecha_actualizacion = :fecha, id_categoria = :idCategoria WHERE id = :id";
             entityManager.createQuery(query)
             .setParameter("titulo", post.getTitulo())
@@ -77,41 +57,6 @@ public class PostDaoImp implements PostDao {
             .setParameter("id", post.getId()).executeUpdate();
     }
 
-    @Override
-    public void updatePost(Post post, List<Image> images, List<Tag> tags) {
-        update(post);
-        Integer postId = getId(post.getTitulo());
-
-        for(int i=0;i<images.size();i++){
-                images.get(i).setIdPost(postId);
-                entityManager.merge(images.get(i));
-        }
-        //tengo array de tags y quiero actualizar, algunos de estos tags pueden ser nuevos y otros tags tienen que ser eliminados
-        //primero tengo que obtener los tags que ya estan en la base de datos
-        List<Tag> tagsInPost = tagDao.getTagsByPostId(postId);
-        //tengo que obtener los tags que ya estan en la base de datos y que no estan en el array de tags que me llega
-        List<Tag> tagsToDelete = tagsInPost.stream().filter(tag -> !tags.contains(tag)).collect(Collectors.toList());
-        //tengo que obtener los tags que estan en el array de tags que me llega y que no estan en la base de datos
-        List<Tag> tagsToInsert = tags.stream().filter(tag -> !tagsInPost.contains(tag)).collect(Collectors.toList());
-
-        //elimino los tags que no estan en el array de tags que me llega
-        for(int i=0;i<tagsToDelete.size();i++){
-            tagDao.deleteTagInPost(postId, tagsToDelete.get(i).getId());
-        }
-
-        //inserto los tags que estan en el array de tags que me llega y que no estan en la base de datos
-        for(int i=0;i<tagsToInsert.size();i++){
-            if(!tagDao.existTagByName(tagsToInsert.get(i).getNombre())){
-                tagDao.postTag(tagsToInsert.get(i));
-                Integer tagId = tagsToInsert.get(i).getId();
-                tagDao.postTagInPost(tagId, postId);
-            }else {
-                Integer tagId = tagDao.getTagByName(tagsToInsert.get(i).getNombre()).getId();
-                tagDao.postTagInPost(tagId, postId);
-            }
-        }
-
-    }
 
     @Override
     public void deletePost(Integer id) {
@@ -165,17 +110,6 @@ public class PostDaoImp implements PostDao {
         System.out.println(listaPosts);
 
         return listaPosts;
-    }
-
-    @Override
-    public List<String> getIdPosts() {
-        String query = "SELECT id FROM Post";
-        List<Integer> lista = entityManager.createQuery(query).getResultList();
-        List<String> result = new ArrayList<String>();
-        for(int i=0;i<lista.size();i++){
-            result.add(lista.get(i).toString());
-        }
-        return result;
     }
 
     @Override

@@ -1,14 +1,10 @@
 package com.example.blogapi.controllers;
 
-import com.example.blogapi.DAO.ImageDao;
-import com.example.blogapi.exceptions.BadRequestException;
-import com.example.blogapi.exceptions.NotFoundException;
-import com.example.blogapi.exceptions.RequestException;
 import com.example.blogapi.models.Image;
+import com.example.blogapi.services.ImageService;
 import com.example.blogapi.utils.CloudinaryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,112 +15,63 @@ import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping(value="api/image")
 @RestController
 public class ImageController {
     @Autowired
-    private ImageDao imageDao;
+    private ImageService imageService;
 
     @Autowired
     CloudinaryUtil cloudinaryUtil;
 
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    @RequestMapping(value="api/image", method = RequestMethod.GET)
+    @GetMapping
     public List<Image> getImages(){
-        if(imageDao.getImages().isEmpty()){
-            throw new RequestException("P-500", HttpStatus.INTERNAL_SERVER_ERROR,"Error al traer los datos, json vacio");
-        }
-        return imageDao.getImages();
+        return imageService.getAllImages();
     }
 
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    @RequestMapping(value="api/image/{id}" , method = RequestMethod.GET)
+    @GetMapping(value="/{id}")
     public Image getImageById(@PathVariable String id){
-
-        if(!imageDao.existImageById(id)){
-            throw new NotFoundException("id:"+id+" no encontrado, el post no existe","p-404");
-        }
-
-        return imageDao.getImageById(id);
+        return imageService.getImageById(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    @RequestMapping(value="api/image" , method = RequestMethod.POST)
+    @PostMapping
     public void postImage(@Valid @RequestBody Image image, BindingResult result){
-        if(image.getId() != null){
-            throw new BadRequestException("el id no es requerido","P-400");
-        }
-
-        if( result.hasFieldErrors("idPost")){
-            throw new BadRequestException("el idPost es requerido","P-400");
-        }
-
-
-        //if subtitulo hasfielderror return bad request
-        if( result.hasFieldErrors("url")){
-            throw new BadRequestException("el url es requerido","P-400");
-        }
-
-
-        imageDao.postImage(image);
+        imageService.postImage(image, result);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    @RequestMapping(value="api/image" , method = RequestMethod.PUT)
+    @PutMapping
     public void updateImage(@Valid @RequestBody Image image, BindingResult result){
-        if(result.hasFieldErrors("id")){
-            throw new BadRequestException("el id es requerido","P-400");
-        }
-
-        if( result.hasFieldErrors("idPost")){
-            throw new BadRequestException("el idPost es requerido","P-400");
-        }
-
-        //if subtitulo hasfielderror return bad request
-        if( result.hasFieldErrors("url")){
-            throw new BadRequestException("el url es requerido","P-400");
-        }
-
-        imageDao.updateImage(image);
+        imageService.updateImage(image, result);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    @RequestMapping(value="api/image/{id}" , method = RequestMethod.DELETE)
+    @DeleteMapping(value="/{id}")
     public void deleteImage(@PathVariable String id){
-        if(!imageDao.existImageById(id)){
-            throw new NotFoundException("id:"+id+" no encontrado, el post no existe","p-404");
-        }
-        imageDao.deleteImage(id);
+        imageService.deleteImage(id);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    @RequestMapping(value = "api/image/cloud", method = RequestMethod.POST)
+    @PostMapping(value = "/cloud")
     public Map postCloud(@RequestBody MultipartFile multipartFile) throws IOException {
 
-        System.out.println("********************");
-        System.out.println(multipartFile);
-        Map result = cloudinaryUtil.upload(multipartFile);
-        System.out.println(result);
-        return result;
+        return imageService.uploadCloud(multipartFile);
     }
 
 
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    @RequestMapping(value = "api/image/cloud/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/cloud/{id}")
     public Map deleteCloud(@PathVariable String id) throws IOException {
-        System.out.println("**********delete*********");
-        System.out.println(id);
-        Map result = cloudinaryUtil.delete(id);
-        if(!imageDao.existImageById(id)){
-            throw new NotFoundException("id:"+id+" no encontrado, la imagen no existe en bd","p-404");
-        }
-        imageDao.deleteImage(id);
-        return result;
+        return imageService.deleteCloud(id);
     }
 }

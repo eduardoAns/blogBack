@@ -1,10 +1,10 @@
-package com.example.blogapi.DAO;
+package com.example.blogapi.repository;
 
 import com.example.blogapi.models.Categoria;
 
 import java.util.List;
 
-public interface CategoriaDao {
+public interface CategoryRepository {
 
     List<Categoria> getCategorias();
 

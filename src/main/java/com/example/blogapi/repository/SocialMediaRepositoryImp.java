@@ -1,4 +1,4 @@
-package com.example.blogapi.DAO;
+package com.example.blogapi.repository;
 
 import com.example.blogapi.models.SocialMedia;
 import org.springframework.stereotype.Repository;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class SocialMediaDaoImp implements SocialMediaDao{
+public class SocialMediaRepositoryImp implements SocialMediaRepository {
 
     @PersistenceContext
     EntityManager entityManager;
@@ -24,17 +24,18 @@ public class SocialMediaDaoImp implements SocialMediaDao{
     }
 
     @Override
-    public void postAvatar(SocialMedia avatar) {
+    public void createSocialMedia(SocialMedia socialMedia) {
 
     }
 
     @Override
-    public void updateAvatar(SocialMedia avatar) {
-
+    public void updateSocialMedia(SocialMedia socialMedia) {
+        entityManager.merge(socialMedia);
     }
 
     @Override
-    public void deleteAvatar(Integer id) {
-
+    public void deleteSocialMedia(SocialMedia socialMedia) {
+        entityManager.remove(socialMedia);
     }
+
 }

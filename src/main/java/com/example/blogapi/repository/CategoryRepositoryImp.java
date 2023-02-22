@@ -1,4 +1,4 @@
-package com.example.blogapi.DAO;
+package com.example.blogapi.repository;
 
 import com.example.blogapi.models.Categoria;
 import org.springframework.stereotype.Repository;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class CategoriaDaoImp implements CategoriaDao{
+public class CategoryRepositoryImp implements CategoryRepository {
 
     @PersistenceContext
     EntityManager entityManager;

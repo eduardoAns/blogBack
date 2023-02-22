@@ -1,10 +1,9 @@
-package com.example.blogapi.DAO;
+package com.example.blogapi.repository;
 
 import com.example.blogapi.models.Tag;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @Transactional
-public class TagDaoImp implements TagDao{
+public class TagRepositoryImp implements TagRepository {
 
     @PersistenceContext
     EntityManager entityManager;

@@ -1,4 +1,4 @@
-package com.example.blogapi.DAO;
+package com.example.blogapi.repository;
 
 import com.example.blogapi.models.Comentario;
 import org.springframework.stereotype.Repository;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class ComentarioDaoImp implements ComentarioDao{
+public class CommentRepositoryImp implements CommentRepository {
 
     @PersistenceContext
     EntityManager entityManager;

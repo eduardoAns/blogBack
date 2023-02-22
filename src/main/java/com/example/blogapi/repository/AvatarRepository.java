@@ -1,10 +1,8 @@
-package com.example.blogapi.DAO;
+package com.example.blogapi.repository;
 
 import com.example.blogapi.models.Avatar;
 
-import java.util.List;
-
-public interface AvatarDao {
+public interface AvatarRepository {
 
     Avatar getAvatarByUserId(Integer idUser);
 
