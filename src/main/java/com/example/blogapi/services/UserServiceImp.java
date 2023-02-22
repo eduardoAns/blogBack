@@ -1,5 +1,7 @@
 package com.example.blogapi.services;
 
+import com.example.blogapi.dto.UserInputDTO;
+import com.example.blogapi.mappers.UserInputDTOToUser;
 import com.example.blogapi.models.Avatar;
 import com.example.blogapi.models.SocialMedia;
 import com.example.blogapi.repository.AvatarRepository;
@@ -18,9 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,32 +28,20 @@ public class UserServiceImp implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private AvatarRepository avatarRepository;
-
     @Autowired
     private SocialMediaRepository socialMediaRepository;
-
     @Autowired
     private ValidateUtil validateUtil;
-
     @Autowired
     private JWTUtil jwtUtil;
+    @Autowired
+    private UserInputDTOToUser mapper;
 
     @Override
     public List<Usuario> getAllUsers() {
-        /*
-        String userId = jwtUtil.getKey(userToken);
-        Usuario userSession = userRepository.getUsuario(Integer.parseInt(userId));
-        Integer adminIdRol = 3;
 
-
-        if(!Objects.equals(userSession.getIdRol(), adminIdRol)){
-            throw new RequestException("P-500", HttpStatus.NON_AUTHORITATIVE_INFORMATION,"Autorizacion deneganada, inicie sesion como administrador");
-
-        }
-        */
         if(userRepository.getUsuarios().isEmpty()){
             throw new RequestException("P-500", HttpStatus.INTERNAL_SERVER_ERROR,"Error al traer los datos, json vacio");
         }
@@ -71,9 +59,12 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void createUser(Usuario user, BindingResult result) {
-        List <String> userProperties = List.of("nombre", "apellidoPaterno", "email", "password", "sexo", "idRol", "estado", "fechaCreacion","descripcion" ) ;
+    public void createUser(UserInputDTO userInputDTO, BindingResult result) {
+
+        List <String> userProperties = List.of("nombre", "apellidoPaterno", "email", "password") ;
         validateUtil.validateJson(userProperties, result);
+
+        Usuario user = mapper.map(userInputDTO);
 
         if(user.getId() != null){
             throw new BadRequestException("el id no es requerido","P-400");

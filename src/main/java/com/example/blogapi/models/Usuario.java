@@ -24,25 +24,27 @@ public class Usuario {
     @Getter @Setter @Column(name = "id")
     private Integer id;
 
-    @NotEmpty @Getter @Setter @Column(name = "nombre")
+    @Getter @Setter @Column(name = "nombre")
     private String nombre;
 
-    @NotEmpty @Getter @Setter @Column(name = "apellido_paterno")
+    @Getter @Setter @Column(name = "apellido_paterno")
     private String apellidoPaterno;
 
     @Getter @Setter @Column(name = "email")
-    @NotEmpty private String email;
+    private String email;
+
+    @Getter @Setter @Column(name = "password")
+    private String password;
 
     @Getter @Setter @Column(name = "sexo")
     private String sexo;
 
-    @NotEmpty @Getter @Setter @Column(name = "password")
-    private String password;
 
-    @NotNull @Getter @Setter @Column(name = "id_rol")
+    @Getter @Setter @Column(name = "id_rol")
     private Integer idRol;
 
-    @NotEmpty @Getter @Setter @Column(name = "estado")
+
+    @Getter @Setter @Column(name = "estado")
     private String estado;
 
     @Getter @Setter @Column(name = "descripcion")
@@ -58,10 +60,12 @@ public class Usuario {
     //@Getter @Setter @JoinColumn(name = "id_rol")
     //private Rol rol;
 
+    /*
     @Getter
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
     private List<Post> posts;
+    */
 
     @Getter
     @OneToMany(cascade = CascadeType.ALL)
